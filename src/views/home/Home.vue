@@ -21,7 +21,7 @@ import { useRouter } from 'vue-router'
         <div>If you know me, you know my world.</div>
       </div>
     </div>
-    <div class="btn" @click="toMain">-></div>
+    <div class="btn" @click="toMain">👉</div>
   </div>
 </template>
 

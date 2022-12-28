@@ -23,6 +23,18 @@
       </ul>
 
     </div>
+    <div class="center">
+      <div class="p1"><span class="highlight">function</span> selfIntroduction( ) {</div>
+      <div class="p2">alert(<span class="highlight">'My name is Gwennie, I graduated from Hanshan Normal University. My major is information management and information system. I have 2 years of experience in front-end development. My technology stack is mainly Vue.'</span>)</div>
+      <div>}</div>
+    </div>
+    <div class="down">
+      <span>👇</span>
+      <span>Welcome to personal information!</span>
+    </div>
+    <div class="envelope">
+      <img src="@/assets/images/envelope.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -38,9 +50,11 @@
     width: 100%;
     height: 90px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #707070;
     padding: 0 40px;
+    background: black;
     .left {
       display: flex;
       align-items: center;
@@ -72,6 +86,32 @@
         }
       }
     }
+  }
+  .center {
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    font-size: 30px;
+    width: 75%;
+    .p2 {
+      margin: 30px 0 30px 25px;
+      font-size: 38px;
+      line-height: 60px;
+    }
+    .highlight {
+      color: #00d67a;
+    }
+  }
+  .down {
+    position: absolute;
+    bottom: 50px;
+    left: 40px;
+    font-size: 23px;
+  }
+  .envelope {
+    position: fixed;
+    bottom: -30px;
+    right: 20px;
   }
 }
 </style>
