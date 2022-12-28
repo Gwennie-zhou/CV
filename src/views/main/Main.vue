@@ -1,4 +1,20 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+
+  const introduction = ref('')
+
+  const str = `alert('My name is Gwennie, I graduated from Hanshan Normal University. My major is information management and information system. I have 2 years of experience in front-end development. My technology stack is mainly Vue.')`
+  let i = 1 //打字效果指针
+
+  function typing () {
+    introduction.value = str.slice(0, i)
+    i++
+    i <= str.length && setTimeout(typing, 100)
+  }
+
+  onMounted(() => {
+    setTimeout(typing, 100)
+  })
 
 </script>
 
@@ -24,8 +40,8 @@
 
     </div>
     <div class="center">
-      <div class="p1"><span class="highlight">function</span> selfIntroduction( ) {</div>
-      <div class="p2">alert(<span class="highlight">'My name is Gwennie, I graduated from Hanshan Normal University. My major is information management and information system. I have 2 years of experience in front-end development. My technology stack is mainly Vue.'</span>)</div>
+      <div class="p1"><span class="highlight">function</span> selfIntroduction ( ) {</div>
+      <div class="p2 highlight">{{ introduction }} <span class="separator"></span></div>
       <div>}</div>
     </div>
     <div class="down">
@@ -101,6 +117,10 @@
     .highlight {
       color: #00d67a;
     }
+    .separator {
+      border-left: 3px solid white;
+      animation: flicker 1s infinite;
+    }
   }
   .down {
     position: absolute;
@@ -110,8 +130,17 @@
   }
   .envelope {
     position: fixed;
-    bottom: -30px;
+    bottom: 10px;
     right: 20px;
+  }
+}
+
+@keyframes flicker {
+  from {
+    border-color: white;
+  } 
+  to {
+    border-color: transparent;
   }
 }
 </style>
