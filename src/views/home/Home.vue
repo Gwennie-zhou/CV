@@ -1,5 +1,10 @@
 <script setup>
+import { useRouter } from 'vue-router'
+  const router = useRouter()
 
+  function toMain() {
+    router.push('/main')
+  }
 </script>
 
 <template>
@@ -16,11 +21,13 @@
         <div>If you know me, you know my world.</div>
       </div>
     </div>
+    <div class="btn" @click="toMain">-></div>
   </div>
 </template>
 
 <style lang="less" scoped>
   .home-container {
+    position: relative;
     width: 100%;
     height: 100vh;
     .bg-img {
@@ -30,7 +37,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url(../../assets/images/bg.png);
+      background-image: url(../../assets/images/bg_copy.png);
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: cover;
@@ -56,7 +63,7 @@
         flex-direction: column;
         width: 200px;
         height: 200px;
-        border: 3px solid black;
+        border: 3px solid #00d67a;
         background-color: white;
         border-radius: 50%;
         font-size: 35px;
@@ -67,6 +74,15 @@
         font-size: 40px;
         font-family: inherit;
       }
+    }
+    .btn {
+      position: absolute;
+      bottom: 20px;
+      right: 50px;
+      z-index: 10;
+      color: white;
+      font-size: 50px;
+      cursor: pointer;
     }
   }
   
