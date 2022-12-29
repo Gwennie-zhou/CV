@@ -13,7 +13,7 @@ import { onMounted, ref } from 'vue';
   }
 
   onMounted(() => {
-    setTimeout(typing, 100)
+    setTimeout(typing, 2000)
   })
 
 </script>
@@ -40,9 +40,9 @@ import { onMounted, ref } from 'vue';
 
     </div>
     <div class="center">
-      <div class="p1"><span class="highlight">function</span> selfIntroduction ( ) {</div>
+      <div class="animate__animated animate__bounce"><span class="highlight">function</span> selfIntroduction ( ) {</div>
       <div class="p2 highlight">{{ introduction }} <span class="separator"></span></div>
-      <div>}</div>
+      <div class="animate__animated animate__bounce">}</div>
     </div>
     <div class="down">
       <span>👇</span>
