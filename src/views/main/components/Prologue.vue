@@ -48,9 +48,9 @@ onMounted(() => {
       <span>👇</span>
       <span>Welcome to personal information!</span>
     </div>
-    <div class="envelope">
+    <!-- <div class="envelope">
       <img src="@/assets/images/envelope.png" alt="">
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -109,10 +109,10 @@ onMounted(() => {
 }
 
 .center {
-  position: absolute;
-  top: 150px;
-  left: 50px;
+  margin-top: 150px;
+  margin-left: 50px;
   font-size: 30px;
+  height: 700px;
   width: 75%;
 
   .p2 {
