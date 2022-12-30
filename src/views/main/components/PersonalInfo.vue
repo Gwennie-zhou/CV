@@ -1,17 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
 
-const x = ref(0)
-const y = ref(0)
-
-function move(e) {
-  x.value = e.offsetX
-  y.value = e.offsetY
-}
-
-onMounted(() => {
-  window.addEventListener('mousemove', move)
-})
 </script>
 
 <template>
@@ -34,7 +22,6 @@ onMounted(() => {
         </ul>
       </div>
     </div>
-    <div class="cursor" :style="{top: y + 'px', left: x + 'px'}"></div>
   </div>
 </template>
 
@@ -48,7 +35,6 @@ onMounted(() => {
   border-top: 1px solid #707070;
   width: 100%;
   height: 97vh;
-  overflow: hidden;
   .title {
     font-size: 50px;
     font-family: "Fira Mono", monospace;
@@ -85,22 +71,6 @@ onMounted(() => {
         }
       }
     }
-  }
-  .cursor {
-    z-index: -1;
-    position: absolute;
-    top: 20%;
-    left: 85%;
-    transform: translate(-50%, -50%);
-    width: 75em;
-    height: 75em;
-    margin: 0 0 0.1px;
-    object-fit: contain;
-    border-radius: 75em;
-    filter: blur(10em);
-    background-image: radial-gradient(circle at 50% 50%, #00ff91, rgba(0, 214, 122, 0));
-    will-change: left, top;
-    transition: all 0.5s;
   }
   
 }

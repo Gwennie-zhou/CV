@@ -148,20 +148,24 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .skill-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
   height: 97vh;
-  padding-top: 40px;
   .title {
     font-size: 50px;
     font-family: "Fira Mono", monospace;
     font-weight: 700;
     line-height: 60px;
     margin-bottom: 30px;
-    text-align: center;
   }
   .charts {
-    width: 100%;
-    height: 800px;
+    width: 800px;
+    height: 550px;
+    background: white;
+    color: black;
     .chart-wrap {
       display: flex;
       flex-direction: column;
