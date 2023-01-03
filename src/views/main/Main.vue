@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
+import Experience from "./components/Experience.vue";
 
 import { ref } from 'vue';
 
@@ -25,6 +26,8 @@ function move(e) {
       <Skill />
       <div class="cursor"></div>
     </div>
+
+    <Experience />
   </div>
 </template>
 
