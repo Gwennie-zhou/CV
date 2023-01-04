@@ -6,6 +6,7 @@ import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
 import Experience from "./components/Experience.vue";
 import OpenSourceProject from "./components/OpenSourceProject.vue";
+import Blog from './components/Blog.vue'
 
 import { ref } from 'vue';
 
@@ -29,6 +30,7 @@ function move(e) {
       <div class="cursor"></div>
     </div>
     <OpenSourceProject />
+    <Blog />
   </div>
 </template>
 

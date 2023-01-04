@@ -278,9 +278,6 @@
       }
     }
   }
-  .theme-color {
-    color: #00d67a;
-  }
   .bold {
     font-weight: 700;
   }
