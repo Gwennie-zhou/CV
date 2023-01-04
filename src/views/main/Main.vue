@@ -5,6 +5,7 @@ import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
 import Experience from "./components/Experience.vue";
+import OpenSourceProject from "./components/OpenSourceProject.vue";
 
 import { ref } from 'vue';
 
@@ -24,10 +25,10 @@ function move(e) {
     <div class="cursor-wrap" @mousemove="move">
       <PersonalInfo />
       <Skill />
+      <Experience />
       <div class="cursor"></div>
     </div>
-
-    <Experience />
+    <OpenSourceProject />
   </div>
 </template>
 
