@@ -7,6 +7,7 @@ import Skill from './components/Skill.vue'
 import Experience from "./components/Experience.vue";
 import OpenSourceProject from "./components/OpenSourceProject.vue";
 import Blog from './components/Blog.vue'
+import SelfEvaluation from "./components/SelfEvaluation.vue";
 
 import { ref } from 'vue';
 
@@ -31,6 +32,7 @@ function move(e) {
     </div>
     <OpenSourceProject />
     <Blog />
+    <SelfEvaluation />
   </div>
 </template>
 

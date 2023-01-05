@@ -3,6 +3,7 @@ import router from '@/router/index'
 import '@/assets/style/reset.css'
 import '@/assets/style/common.css'
 import 'animate.css';
+import 'css-doodle';
 
 import App from './App.vue'
 
