@@ -22,12 +22,12 @@ function move(e) {
 
 function contactMe() {
   isOpen.value = true
-  document.querySelector('body').classList.toggle('hidden')
+  document.body.style.overflow = 'hidden' // 禁止页面滚动
 }
 
 function close() {
   isOpen.value = false
-  document.querySelector('body').classList.toggle('hidden')
+  document.body.style.overflow = ''
 }
 </script>
 
@@ -160,8 +160,5 @@ function close() {
     line-height: 48px;
     cursor: pointer;
   }
-}
-.hidden {
-  overflow: hidden;
 }
 </style>
