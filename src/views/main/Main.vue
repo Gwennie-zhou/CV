@@ -122,15 +122,17 @@ function close() {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 199;
   width: 100%;
   height: 100%;
   background: #394047;
   opacity: .5;
 }
 .popup {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 200;
   transform: translate(-50%,-50%);
   width: 560px;
   height: 420px;
