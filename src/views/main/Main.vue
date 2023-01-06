@@ -22,10 +22,12 @@ function move(e) {
 
 function contactMe() {
   isOpen.value = true
+  document.querySelector('body').classList.toggle('hidden')
 }
 
 function close() {
   isOpen.value = false
+  document.querySelector('body').classList.toggle('hidden')
 }
 </script>
 
@@ -125,8 +127,7 @@ function close() {
   z-index: 199;
   width: 100%;
   height: 100%;
-  background: #394047;
-  opacity: .5;
+  background-color: hsla(0,0%,7%,.65);
 }
 .popup {
   position: fixed;
@@ -159,5 +160,8 @@ function close() {
     line-height: 48px;
     cursor: pointer;
   }
+}
+.hidden {
+  overflow: hidden;
 }
 </style>
