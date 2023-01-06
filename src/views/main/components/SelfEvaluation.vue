@@ -5,12 +5,11 @@
     <img src="@/assets/images/wordcloud.png" alt="" class="wordcloud">
     <css-doodle grid="40x40">
       :doodle {
-      @size: 100vw 100vmin;
-
+        @size: 100vw 100vmin;
       }
       :container {
-      perspective: 100px;
-      transform-style: preserve-3d;
+        perspective: 100px;
+        transform-style: preserve-3d;
       }
       position: absolute;
       top: 0;
@@ -26,9 +25,9 @@
       zoom: @r(.1, 5, 3);
       box-shadow: 0 0 1px #fff, 0 0 3px #fff, 0 0 10px #fff;
       @keyframes move {
-      100% {
-      transform: rotate(0) translate3d(0, 0, 0);
-      }
+        100% {
+          transform: rotate(0) translate3d(0, 0, 0);
+        }
       }
     </css-doodle>
   </div>
