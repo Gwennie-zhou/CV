@@ -48,9 +48,6 @@ onMounted(() => {
       <span>👇</span>
       <span>Welcome to personal information!</span>
     </div>
-    <!-- <div class="envelope">
-      <img src="@/assets/images/envelope.png" alt="">
-    </div> -->
   </div>
 </template>
 
@@ -136,12 +133,6 @@ onMounted(() => {
   bottom: 50px;
   left: 40px;
   font-size: 23px;
-}
-
-.envelope {
-  position: fixed;
-  bottom: 10px;
-  right: 20px;
 }
 
 @keyframes flicker {
