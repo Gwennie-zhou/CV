@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="project-wrap">
+    <div class="project-container">
       <div class="left">
         <div class="first">
           <div class="name">深圳小鹅网络技术有限公司</div>
@@ -212,7 +212,7 @@
       }
     }
   }
-  .project-wrap {
+  .project-container {
     display: flex;
     width: 100%;
     height: 70vh;
