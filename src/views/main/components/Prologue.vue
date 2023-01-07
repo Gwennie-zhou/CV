@@ -1,28 +1,28 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-
-const introduction = ref('')
-
-const str = `alert('My name is Gwennie, I graduated from Hanshan Normal University. My major is information management and information system. I have 2 years of experience in front-end development. My technology stack is mainly Vue.')`
-let i = 1 //打字效果指针
-
-function typing() {
-  introduction.value = str.slice(0, i)
-  i++
-  i <= str.length && setTimeout(typing, 100)
-}
-
-onMounted(() => {
-  setTimeout(typing, 2000)
-})
 </script>
 
 <template>
   <div class="prologue-container">
     <div class="center">
-      <div class="animate__animated animate__bounce"><span class="highlight">function</span> selfIntroduction ( ) {
+      <div class="animate__animated animate__bounce"><span class="theme-color">function</span> Welcome ( ) {
       </div>
-      <div class="p2 highlight">{{ introduction }} <span class="separator"></span></div>
+      <div class="text-wrap">
+        <div class="inline-block">
+          <div class="text theme-color">alert('Welcome to my world.')</div>
+        </div>
+        <br/>
+        <div class="inline-block">
+          <div class="text theme-color">if (you know me) {</div>
+        </div>
+        <br/>
+        <div class="inline-block">
+          <div class="text theme-color indent">console.log('you know my world.')</div>
+        </div>
+        <br/>
+        <div class="inline-block">
+          <div class="text theme-color">}</div>
+        </div>
+      </div>
       <div class="animate__animated animate__bounce">}</div>
     </div>
     <div class="down">
@@ -39,22 +39,39 @@ onMounted(() => {
   margin-left: 50px;
   font-size: 30px;
   height: 700px;
-  width: 75%;
-
-  .p2 {
-    margin: 30px 0 30px 25px;
+  .text-wrap {
+    margin: 30px;
+  }
+  .inline-block {
+    display: inline-block;
+  }
+  .text {
     font-size: 38px;
-    line-height: 60px;
+    padding: 4px;
+    margin-bottom: 20px;
+    width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid transparent;
+    animation: typing 2s steps(15, end) forwards, flicker 1s infinite;
+  }
+  .text-wrap>div:nth-child(1) .text {
+    animation-delay: 0;
+  }
+  .text-wrap>div:nth-child(2) .text {
+    animation-delay: 2s;
+    animation-duration: 1s;
+  }
+  .text-wrap>div:nth-child(3) .text {
+    animation-delay: 3s;
+  }
+  .text-wrap>div:nth-child(4) .text {
+    animation-delay: 5s;
+  }
+  .indent {
+    padding-left: 24px;
   }
 
-  .highlight {
-    color: #00d67a;
-  }
-
-  .separator {
-    border-left: 3px solid white;
-    animation: flicker 1s infinite;
-  }
 }
 
 .down {
@@ -63,14 +80,17 @@ onMounted(() => {
   left: 40px;
   font-size: 23px;
 }
-
-@keyframes flicker {
+@keyframes typing {
   from {
-    border-color: white;
+    width: 0;
   }
-
   to {
-    border-color: transparent;
+    width: 100%;
+  }
+}
+@keyframes flicker {
+  50% {
+    border-right: 3px solid #fff;
   }
 }
 </style>
