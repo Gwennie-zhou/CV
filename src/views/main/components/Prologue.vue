@@ -46,6 +46,7 @@
     display: inline-block;
   }
   .text {
+    visibility: hidden;
     font-size: 38px;
     padding: 4px;
     margin-bottom: 20px;
@@ -53,19 +54,21 @@
     white-space: nowrap;
     overflow: hidden;
     border-right: 3px solid transparent;
-    animation: typing 2s steps(15, end) forwards, flicker 1s infinite;
   }
-  .text-wrap>div:nth-child(1) .text {
-    animation-delay: 0;
+  .inline-block:nth-child(1) .text {
+    animation: typing 2s steps(15, end) forwards, flicker .5s 4;
+    animation-delay: 0.1s;
   }
-  .text-wrap>div:nth-child(2) .text {
+  .inline-block:nth-child(3) .text {
+    animation: typing 1s steps(15, end) forwards, flicker .5s 2;
     animation-delay: 2s;
-    animation-duration: 1s;
   }
-  .text-wrap>div:nth-child(3) .text {
+ .inline-block:nth-child(5) .text {
+    animation: typing 2s steps(15, end) forwards, flicker .5s 4;
     animation-delay: 3s;
   }
-  .text-wrap>div:nth-child(4) .text {
+  .inline-block:nth-child(7) .text {
+    animation: typing .5s steps(15, end) forwards, flicker 1s infinite;
     animation-delay: 5s;
   }
   .indent {
@@ -82,15 +85,23 @@
 }
 @keyframes typing {
   from {
+    visibility: visible;
     width: 0;
   }
   to {
+    visibility: visible;
     width: 100%;
   }
 }
 @keyframes flicker {
+  0% {
+    border-right: 3px solid transparent;
+  }
   50% {
     border-right: 3px solid #fff;
+  }
+  100% {
+    border-right: 3px solid transparent;
   }
 }
 </style>
