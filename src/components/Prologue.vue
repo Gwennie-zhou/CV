@@ -26,7 +26,7 @@
       <div class="animate__animated animate__bounce">}</div>
     </div>
     <div class="down">
-      <span>👇</span>
+      <img src="@/assets/images/arrow_down.png" alt="" class="arrow-down">
       <span>Welcome to personal information!</span>
     </div>
   </div>
@@ -82,6 +82,12 @@
   bottom: 50px;
   left: 40px;
   font-size: 23px;
+  .arrow-down {
+    width: 60px;
+    vertical-align: middle;
+    height: 60px;
+    animation: shake 1s linear infinite alternate;
+  }
 }
 @keyframes typing {
   from {
@@ -102,6 +108,14 @@
   }
   100% {
     border-right: 3px solid transparent;
+  }
+}
+@keyframes shake {
+  from {
+    transform: translateY(0)
+  }
+  to {
+    transform: translateY(13px)
   }
 }
 </style>

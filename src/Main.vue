@@ -194,7 +194,7 @@ function close() {
   .floating-btn {
     z-index: 100;
     position: fixed;
-    bottom: 10px;
+    bottom: 27px;
     right: 50px;
     cursor: pointer;
     .contact {
