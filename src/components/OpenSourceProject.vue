@@ -44,6 +44,16 @@
 .open-source-pro-container {
   width: 100%;
   overflow-x: auto;
+  &::-webkit-scrollbar{
+    background-color: transparent;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: white;
+    border-radius: 8px;
+    background-clip: content-box;
+    border: 6px solid transparent;
+  }
   &__box {
     display: flex;
     width: 120%;
