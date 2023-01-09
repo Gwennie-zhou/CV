@@ -9,6 +9,9 @@
           <div>&lt;work_experience</div>
           <div>/&gt;</div>
         </div>
+        <div class="work-gif">
+          <img src="@/assets/images/work.gif" alt="" />
+        </div>
       </div>
       <div class="line"></div>
       <div class="right">
@@ -123,6 +126,9 @@
           <div>&lt;project_experience</div>
           <div>/&gt;</div>
         </div>
+        <div class="project-gif">
+          <img src="@/assets/images/project.gif" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -148,6 +154,10 @@
         font-size: 24px;
         font-weight: 700;
         margin-top: 40px;
+      }
+      .work-gif {
+        margin-top: 30px;
+        margin-left: 50px;
       }
     }
     .line {
@@ -275,6 +285,10 @@
         font-size: 24px;
         font-weight: 700;
         margin-top: 40px;
+      }
+      .project-gif {
+        background: white;
+        margin-top: 80px;
       }
     }
   }
