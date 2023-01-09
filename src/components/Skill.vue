@@ -19,6 +19,10 @@ const piesTop = reactive['vue', 'react', 'js']
 const piesBottom = reactive['css', 'webpack']
 
 onMounted(() => {
+  makeCharts()
+})
+
+function makeCharts() {
   const vuePie = echarts.init(document.getElementById('vue_pie'));
   const reactPie = echarts.init(document.getElementById('react_pie'));
   const jsPie = echarts.init(document.getElementById('js_pie'));
@@ -126,7 +130,7 @@ onMounted(() => {
     ]
   })
 
-})
+}
 
 </script>
 
