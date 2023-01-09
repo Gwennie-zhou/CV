@@ -87,6 +87,7 @@ function close() {
 
     <div class="cursor-wrap" @mousemove="move">
       <PersonalInfo />
+      <div class="hr"></div>
       <Skill />
       <Experience />
       <div class="cursor"></div>

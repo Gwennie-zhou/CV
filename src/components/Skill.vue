@@ -140,7 +140,7 @@ onMounted(() => {
         </li>
       </ol>
     </div>
-    <div class="line"></div>
+    <div class="vl"></div>
     <div class="right">
       <div class="title">
         <div>&lt;skill</div>
@@ -169,11 +169,10 @@ onMounted(() => {
   display: flex;
   width: 100%;
   height: 50vh;
-  border-top: 1px solid #707070;
   .left {
     flex: 1;
     padding: 50px 30px;
-    font-size: 18px;
+    font-size: 20px;
     ol li {
       padding-bottom: 5px;
     }
@@ -181,12 +180,6 @@ onMounted(() => {
       margin-right: 5px;
       color: #00d67a;
     }
-  }
-
-  .line {
-    width: 1px;
-    height: 100%;
-    background: #707070;
   }
 
   .right {

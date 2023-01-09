@@ -3,6 +3,7 @@
 
 <template>
   <div class="experience-container">
+    <div class="hr"></div>
     <div class="work-container">
       <div class="left">
         <div class="title">
@@ -13,7 +14,7 @@
           <img src="@/assets/images/work.gif" alt="" />
         </div>
       </div>
-      <div class="line"></div>
+      <div class="vl"></div>
       <div class="right">
         <div class="work-wrap">
           <div class="timeline">
@@ -56,6 +57,7 @@
         </div>
       </div>
     </div>
+    <div class="hr"></div>
     <div class="project-container">
       <div class="left">
         <div class="first">
@@ -120,7 +122,7 @@
           </div>
         </div>
       </div>
-      <div class="line"></div>
+      <div class="vl"></div>
       <div class="right">
         <div class="title">
           <div>&lt;project_experience</div>
@@ -131,19 +133,18 @@
         </div>
       </div>
     </div>
+    <div class="hr"></div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .experience-container {
   width: 100%;
-  height: 120vh;
+  height: 130vh;
   .work-container {
     display: flex;
     width: 100%;
     height: 50vh;
-    border-top: 1px solid #707070;
-    border-bottom: 1px solid #707070;
     .left {
       width: 30%;
       height: 100%;
@@ -159,11 +160,6 @@
         margin-top: 30px;
         margin-left: 50px;
       }
-    }
-    .line {
-      width: 1px;
-      height: 100%;
-      background: #707070;
     }
     .right {
       flex: 1;
@@ -226,7 +222,6 @@
     display: flex;
     width: 100%;
     height: 70vh;
-    border-bottom: 1px solid #707070;
     .left {
       flex: 1;
       padding: 25px 40px;
@@ -269,11 +264,6 @@
       border-radius: 8px;
       background-clip: content-box;
       border: 2px solid transparent;
-    }
-    .line {
-      width: 1px;
-      height: 100%;
-      background: #707070;
     }
     .right {
       width: 30%;

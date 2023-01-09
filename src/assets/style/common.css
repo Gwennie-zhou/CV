@@ -21,3 +21,13 @@ body::-webkit-scrollbar-thumb{
 .theme-color {
   color: #00d67a;
 }
+.hr {
+  width: 100%;
+  height: 1px;
+  background: white;
+}
+.vl {
+  width: 1px;
+  height: 100%;
+  background: #707070;
+}
