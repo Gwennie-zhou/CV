@@ -56,7 +56,10 @@
       margin-top: 40px;
       margin-right: 40px;
       writing-mode: tb-rl;
-      letter-spacing: 110px;
+      letter-spacing: 90px;
+      text-align: center;
+      background: #00d67a;
+      padding: 10px;
     }
 
     .project {
