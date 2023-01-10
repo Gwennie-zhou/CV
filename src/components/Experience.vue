@@ -148,17 +148,15 @@
     .left {
       width: 30%;
       height: 100%;
-      padding: 0 30px;
+      padding: 20px 30px;
       .title {
-        display: flex;
-        justify-content: space-between;
-        font-size: 24px;
-        font-weight: 700;
-        margin-top: 40px;
+        padding-top: 20px;
       }
       .work-gif {
-        margin-top: 30px;
-        margin-left: 50px;
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
     .right {
@@ -268,17 +266,17 @@
     .right {
       width: 30%;
       height: 100%;
-      padding: 0 30px;
+      padding: 50px 5px;
       .title {
-        display: flex;
-        justify-content: space-between;
-        font-size: 24px;
-        font-weight: 700;
-        margin-top: 40px;
+        font-size: 35px;
+        line-height: 50px;
       }
       .project-gif {
-        background: white;
-        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
       }
     }
   }
