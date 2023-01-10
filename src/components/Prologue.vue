@@ -35,7 +35,7 @@
 <style lang="less" scoped>
 
 .center {
-  margin-top: 150px;
+  margin-top: 60px;
   margin-left: 50px;
   font-size: 30px;
   height: 700px;
