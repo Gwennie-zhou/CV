@@ -3,7 +3,8 @@
 <template>
   <div class="evaluation-container">
     <img src="@/assets/images/wordcloud.png" alt="" class="wordcloud">
-    <css-doodle grid="40x40">
+    <img src="@/assets/images/bg.gif" alt="由于代码做出的背景生成的元素过多导致页面卡顿，遂将其录制成gif的形式展示在页面中，背景的代码实现可看以下注释" class="bg-gif" />
+    <!-- <css-doodle grid="40x40">
       :doodle {
         @size: 100vw 100vmin;
       }
@@ -29,7 +30,7 @@
           transform: rotate(0) translate3d(0, 0, 0);
         }
       }
-    </css-doodle>
+    </css-doodle> -->
   </div>
 </template>
 
@@ -40,7 +41,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   background-color: #000;
   overflow: hidden;
   .wordcloud {
@@ -49,8 +50,8 @@
     left: 50%;
     transform: translate(-50%,-50%);
     z-index: 1;
-    width: 700px;
-    height: 700px;
+    width: 800px;
+    height: 800px;
   }
 }
 </style>
