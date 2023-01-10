@@ -1,7 +1,91 @@
-<script setup></script>
+<script setup>
+import { getPageYOfElem } from '@/utils/common'
+import { computed, onMounted, ref, watch } from 'vue';
+
+const dom = ref('')
+const offsetMinY = ref(0)
+const scrollX = ref(0) // 横向应该滚动的距离
+const isHrScroll = ref(true) // 是否横向滚动
+
+const  deltaY = ref(0)  //滚轮垂直方向上的滚动值
+const isDownRoll = ref(true) // 判断是否向下滚动
+const isEdge = ref(true) // 判断是否到边缘（最左或最右)
+const isLeftEdge = ref(true) // 判断是否到左边缘
+const isRightEdge = ref(false) // 判断是否到右边缘
+
+//监听滚轮滚动的方向, deltaY正值： 向下滚动， 负值： 向上滚动
+watch(deltaY, deltaY => isDownRoll.value = deltaY > 0 )
+
+// 监听滚动条的位置
+watch(scrollX, scrollX => isEdge.value = scrollX === 0 || scrollX === 622) // 622是横向滚动到最右边的距离
+
+watch(scrollX, scrollX => isLeftEdge.value = scrollX <= 0) // 622是横向滚动到最右边的距离
+watch(scrollX, scrollX => isRightEdge.value = scrollX >= 622) // 622是横向滚动到最右边的距离
+
+onMounted(()=>{
+  dom.value = document.querySelector('.open-source-pro-container')
+  offsetMinY.value = dom.value.offsetTop
+})
+
+const offsetMaxY = computed(() => {
+  const domHeight = dom.value.getBoundingClientRect().height
+  return offsetMinY.value + domHeight
+})
+
+let currentY = 0;
+
+/*  
+函数作用：纵向滚动变成横向滚动
+监听容器的滚轮事件
+如果是到最左边然后向上滚动，那就向上滚，否则就横向滚动
+如果是到最右边然后向下滚动，那就向下滚，否则就横向滚动
+
+*/
+const handleWheel = (event) => {
+  // const dom = document.querySelector('.open-source-pro-container')
+  // const offsetTop = dom.offsetTop;
+  // let diff = 0;
+  // const scrollW = document.querySelector('.open-source-pro-container__box').offsetWidth - dom.offsetWidth;
+  // console.log(window.scrollY >= offsetTop)
+  // if (window.scrollY >= offsetTop) {
+  //   diff = window.scrollY - currentY;
+  //   if (diff < 0) {
+  //     diff = 0;
+  //   } else if (diff >= scrollW) {
+  //     diff = scrollW;
+  //   }
+  //   currentY = window.scrollY;
+  // }
+  // dom.scrollTo(dom.scrollLeft + diff, 0);
+  // window.scrollTo(0, offsetTop)
+
+  // 核心代码
+  // event.preventDefault()
+  // console.log("deltaY", event.deltaY);
+  // deltaY.value = event.deltaY
+  // dom.value.scrollLeft += event.deltaY
+  // scrollX.value = dom.value.scrollLeft
+
+/*  
+函数作用：纵向滚动变成横向滚动
+监听容器的滚轮事件
+如果是到最左边然后向下滚动，那就横向滚动， 否则向上滚
+如果是到最右边然后向上滚动，那就横向滚动， 否则向下滚
+
+*/
+  if ((isLeftEdge && isDownRoll) || (isRightEdge && !isDownRoll)) {
+    event.preventDefault()
+    deltaY.value = event.deltaY
+    dom.value.scrollLeft += event.deltaY
+    scrollX.value = dom.value.scrollLeft
+  }
+
+}
+
+</script>
 
 <template>
-  <div class="open-source-pro-container">
+  <div class="open-source-pro-container" @wheel="handleWheel">
     <div class="open-source-pro-container__box">
       <div class="title">个人项目</div>
       <div class="project">
@@ -43,6 +127,7 @@
 <style lang="less" scoped>
 .open-source-pro-container {
   width: 100%;
+  height: 100vh;
   overflow-x: auto;
   &::-webkit-scrollbar{
     background-color: transparent;
@@ -76,6 +161,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
+      flex-shrink: 0;
       width: 400px;
       height: 450px;
       background: white;
