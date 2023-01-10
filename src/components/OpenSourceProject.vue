@@ -1,5 +1,4 @@
 <script setup>
-import { getPageYOfElem } from '@/utils/common'
 import { computed, onMounted, ref, watch } from 'vue';
 
 const dom = ref('')
@@ -59,12 +58,6 @@ const handleWheel = (event) => {
   // dom.scrollTo(dom.scrollLeft + diff, 0);
   // window.scrollTo(0, offsetTop)
 
-  // 核心代码
-  // event.preventDefault()
-  // console.log("deltaY", event.deltaY);
-  // deltaY.value = event.deltaY
-  // dom.value.scrollLeft += event.deltaY
-  // scrollX.value = dom.value.scrollLeft
 
 /*  
 函数作用：纵向滚动变成横向滚动
