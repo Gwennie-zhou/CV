@@ -15,12 +15,9 @@ const skills = reactive([
   '具有优秀的英语读写能力（英语六级），在 medium（需翻墙）上面写技术博客'
 ])
 
-const piesTop = reactive['vue', 'react', 'js']
-const piesBottom = reactive['css', 'webpack']
+const piesTop = reactive(['vue', 'react', 'js'])
+const piesBottom = reactive(['css', 'webpack'])
 
-onMounted(() => {
-  makeCharts()
-})
 
 function makeCharts() {
   const vuePie = echarts.init(document.getElementById('vue_pie'));
@@ -28,6 +25,7 @@ function makeCharts() {
   const jsPie = echarts.init(document.getElementById('js_pie'));
   const cssPie = echarts.init(document.getElementById('css_pie'));
   const webpackPie = echarts.init(document.getElementById('webpack_pie'));
+
 
   const commonOption = {
     type: 'pie',
@@ -132,6 +130,10 @@ function makeCharts() {
 
 }
 
+onMounted(() => {
+  makeCharts()
+})
+
 </script>
 
 <template>
@@ -192,21 +194,12 @@ function makeCharts() {
     padding: 20px 30px;
   }
 
-  .title {
-    display: flex;
-    justify-content: space-between;
-    font-size: 50px;
-    font-family: "Fira Mono", monospace;
-    font-weight: 700;
-    line-height: 60px;
-    margin-bottom: 30px;
-  }
-
   .charts {
     width: 80%;
     height: 80%;
     background: white;
     color: black;
+    border-radius: 10px;
 
     .chart-wrap {
       display: flex;
