@@ -1,37 +1,12 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const dom = ref('')
-const offsetMinY = ref(0)
-const scrollX = ref(0) // 横向应该滚动的距离
-const isHrScroll = ref(true) // 是否横向滚动
+const deltaY = ref(0)  //滚轮垂直方向上的滚动值
 
-const  deltaY = ref(0)  //滚轮垂直方向上的滚动值
-const isDownRoll = ref(true) // 判断是否向下滚动
-const isEdge = ref(true) // 判断是否到边缘（最左或最右)
-const isLeftEdge = ref(true) // 判断是否到左边缘
-const isRightEdge = ref(false) // 判断是否到右边缘
-
-//监听滚轮滚动的方向, deltaY正值： 向下滚动， 负值： 向上滚动
-watch(deltaY, deltaY => isDownRoll.value = deltaY > 0 )
-
-// 监听滚动条的位置
-watch(scrollX, scrollX => isEdge.value = scrollX === 0 || scrollX === 622) // 622是横向滚动到最右边的距离
-
-watch(scrollX, scrollX => isLeftEdge.value = scrollX <= 0) // 622是横向滚动到最右边的距离
-watch(scrollX, scrollX => isRightEdge.value = scrollX >= 622) // 622是横向滚动到最右边的距离
-
-onMounted(()=>{
+onMounted(() => {
   dom.value = document.querySelector('.open-source-pro-container')
-  offsetMinY.value = dom.value.offsetTop
 })
-
-const offsetMaxY = computed(() => {
-  const domHeight = dom.value.getBoundingClientRect().height
-  return offsetMinY.value + domHeight
-})
-
-let currentY = 0;
 
 /*  
 函数作用：纵向滚动变成横向滚动
@@ -41,38 +16,37 @@ let currentY = 0;
 
 */
 const handleWheel = (event) => {
-  // const dom = document.querySelector('.open-source-pro-container')
-  // const offsetTop = dom.offsetTop;
-  // let diff = 0;
-  // const scrollW = document.querySelector('.open-source-pro-container__box').offsetWidth - dom.offsetWidth;
-  // console.log(window.scrollY >= offsetTop)
-  // if (window.scrollY >= offsetTop) {
-  //   diff = window.scrollY - currentY;
-  //   if (diff < 0) {
-  //     diff = 0;
-  //   } else if (diff >= scrollW) {
-  //     diff = scrollW;
-  //   }
-  //   currentY = window.scrollY;
-  // }
-  // dom.scrollTo(dom.scrollLeft + diff, 0);
-  // window.scrollTo(0, offsetTop)
-
-
-/*  
-函数作用：纵向滚动变成横向滚动
-监听容器的滚轮事件
-如果是到最左边然后向下滚动，那就横向滚动， 否则向上滚
-如果是到最右边然后向上滚动，那就横向滚动， 否则向下滚
-
-*/
-  if ((isLeftEdge && isDownRoll) || (isRightEdge && !isDownRoll)) {
-    event.preventDefault()
-    deltaY.value = event.deltaY
-    dom.value.scrollLeft += event.deltaY
-    scrollX.value = dom.value.scrollLeft
+  // 当在视口窗度才允许滚动
+  if (dom.value.offsetTop < window.scrollY || dom.value.offsetTop + dom.value.offsetHeight / 2 < window.scrollY) {
+    event.returnValue = true; //设为true即为允许默认事件，即页面滚动
+    return;
   }
 
+  deltaY.value = event.deltaY;
+  const domScrollLeft = dom.value.scrollLeft + event.deltaY;
+
+  // 判断是否在最左边
+  const _isLeftEdge = domScrollLeft <= 0;
+
+  /* 判断是否滚动到最右边思路
+    滚动条可滚动的距离，是容器本身可滚动宽度（可能包括容器内部内容宽度、padding等）与容器本身的宽度的差值，
+    滚动条滚动到最右边，说明此时滚动条可滚动的距离达到最大。
+    元素的clientWidth是包括内容、padding值，不包括border和margin。
+  */
+  const _isRightEdge = dom.value.scrollLeft === (dom.value.scrollWidth - dom.value.clientWidth);
+
+  // 判断滚轮是向上滚动（deltaY为负值）还是向下滚动（deltaY为正值）
+  const _isDownRoll = event.deltaY > 0;
+
+
+  if ((_isLeftEdge && !_isDownRoll) || (_isRightEdge && _isDownRoll)) {
+    event.returnValue = true; // 设为true即为允许默认事件
+  }
+  // 让元素横向滚动
+  if ((_isLeftEdge && _isDownRoll) || (_isRightEdge && !_isDownRoll) || (!_isRightEdge && !_isLeftEdge)) {
+    event.returnValue = false; // 手动设置为false表示阻止默认事件，相当于调用event.preventDefault()
+    dom.value.scrollLeft = domScrollLeft
+  }
 }
 
 </script>
@@ -122,19 +96,22 @@ const handleWheel = (event) => {
   width: 100%;
   height: 100vh;
   overflow-x: auto;
-  &::-webkit-scrollbar{
+
+  &::-webkit-scrollbar {
     background-color: transparent;
     width: 10px;
   }
-  &::-webkit-scrollbar-thumb{
+
+  &::-webkit-scrollbar-thumb {
     background-color: white;
     border-radius: 8px;
     background-clip: content-box;
     border: 6px solid transparent;
   }
+
   &__box {
     display: flex;
-    width: 120%;
+    width: 1850px;
     height: 80vh;
     padding: 40px;
 
