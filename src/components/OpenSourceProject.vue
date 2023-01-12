@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 
-const dom = ref('')
-const deltaY = ref(0)  //滚轮垂直方向上的滚动值
+// 动画库
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
 
 // 项目
 const projects = reactive([
@@ -48,144 +50,97 @@ const projects = reactive([
   }
 ])
 
-onMounted(() => {
-  dom.value = document.querySelector('.open-source-pro-container')
-})
+// 横向滚动
+const hrScroll = () => {
+  const sections = gsap.utils.toArray(".panel");
 
-/*  
-函数作用：纵向滚动变成横向滚动
-监听容器的滚轮事件
-如果是到最左边然后向上滚动，那就向上滚，否则就横向滚动
-如果是到最右边然后向下滚动，那就向下滚，否则就横向滚动
-
-*/
-const handleWheel = (event) => {
-  // 当在视口窗度才允许滚动
-  if (dom.value.offsetTop < window.scrollY || dom.value.offsetTop + dom.value.offsetHeight / 2 < window.scrollY) {
-    event.returnValue = true; //设为true即为允许默认事件，即页面滚动
-    return;
-  }
-
-  deltaY.value = event.deltaY;
-  const domScrollLeft = dom.value.scrollLeft + event.deltaY;
-
-  // 判断是否在最左边
-  const _isLeftEdge = domScrollLeft <= 0;
-
-  /* 判断是否滚动到最右边思路
-    滚动条可滚动的距离，是容器本身可滚动宽度（可能包括容器内部内容宽度、padding等）与容器本身的宽度的差值，
-    滚动条滚动到最右边，说明此时滚动条可滚动的距离达到最大。
-    元素的clientWidth是包括内容、padding值，不包括border和margin。
-  */
-  const _isRightEdge = dom.value.scrollLeft === (dom.value.scrollWidth - dom.value.clientWidth);
-
-  // 判断滚轮是向上滚动（deltaY为负值）还是向下滚动（deltaY为正值）
-  const _isDownRoll = event.deltaY > 0;
-
-
-  if ((_isLeftEdge && !_isDownRoll) || (_isRightEdge && _isDownRoll)) {
-    event.returnValue = true; // 设为true即为允许默认事件
-  }
-  // 让元素横向滚动
-  if ((_isLeftEdge && _isDownRoll) || (_isRightEdge && !_isDownRoll) || (!_isRightEdge && !_isLeftEdge)) {
-    event.returnValue = false; // 手动设置为false表示阻止默认事件，相当于调用event.preventDefault()
-    dom.value.scrollLeft = domScrollLeft
-  }
+  let scrollTween = gsap.to(sections, {
+    x: -600 * (sections.length - 1),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.open-source-pro-container', //触发滚动的元素
+      start: "top top", // 当触发器的顶部碰到视口的顶部时
+      pin: true, // 在执行滚动动画时固定触发器元素
+      scrub: 0.1, // 触发器0.1s后跟上滚动条进度
+    }
+  })
 }
+
+onMounted(() => {
+  hrScroll()
+})
 
 </script>
 
 <template>
-  <div class="open-source-pro-container" @wheel="handleWheel">
-    <div class="open-source-pro-container__box">
-      <div class="title">个人项目</div>
-      <div class="projects-wrap">
-        <div class="project" v-for="(item, index) in projects" :key="index">
-          <div class="name">{{ item.name }}</div>
-          <div class="desc">{{ item.desc }}</div>
-          <div class="tech-stack">技术栈：{{ item.techStack }}</div>
-          <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
-          </div>
-          <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
-          <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
+  <div class="open-source-pro-container">
+    <div class="title">个人项目</div>
+    <div class="projects-wrap">
+      <div class="panel" v-for="(item, index) in projects" :key="index">
+        <div class="name">{{ item.name }}</div>
+        <div class="desc">{{ item.desc }}</div>
+        <div class="tech-stack">技术栈：{{ item.techStack }}</div>
+        <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
         </div>
+        <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
+        <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
       </div>
-
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .open-source-pro-container {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  width: 200%;
   height: 100vh;
-  overflow-x: auto;
+  padding: 40px;
 
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 10px;
+  .title {
+    font-weight: 700;
+    font-size: 28px;
+    margin-top: 40px;
+    margin-right: 40px;
+    writing-mode: tb-rl;
+    letter-spacing: 90px;
+    text-align: center;
+    background: #52d600;
+    padding: 10px;
   }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: white;
-    border-radius: 8px;
-    background-clip: content-box;
-    border: 6px solid transparent;
-  }
-
-  &__box {
+  .projects-wrap {
     display: flex;
-    width: 1850px;
-    height: 80vh;
-    padding: 40px;
 
-    .title {
-      font-weight: 700;
-      font-size: 28px;
-      margin-top: 40px;
-      margin-right: 40px;
-      writing-mode: tb-rl;
-      letter-spacing: 90px;
-      text-align: center;
-      background: #00d67a;
-      padding: 10px;
-    }
-
-    .projects-wrap {
+    .panel {
       display: flex;
-      .project {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        width: 400px;
-        height: 450px;
-        background: white;
-        transform: skewX(355deg);
-        border-radius: 5%;
-        box-shadow: 0 0 10px 3px #00ff91;
-        color: black;
-        font-size: 18px;
-        padding: 20px;
-        margin: 0 20px;
+      flex-direction: column;
+      justify-content: space-evenly;
+      width: 600px;
+      height: 500px;
+      background: white;
+      transform: skewX(355deg);
+      border-radius: 5%;
+      box-shadow: 0 0 10px 3px #00ff91;
+      color: black;
+      font-size: 18px;
+      padding: 20px;
+      margin: 0 20px;
 
-        .name {
-          font-size: 24px;
-        }
+      .name {
+        font-size: 24px;
+      }
 
-        .desc {
-          color: #787878;
-        }
+      .desc {
+        color: #787878;
+      }
 
-        a {
-          color: #64d1a2;
-        }
+      a {
+        color: #64d1a2;
       }
     }
-
-
-    .project:nth-child(odd) {
-      margin-top: 120px;
-    }
   }
+
+
+ 
 }
 </style>
