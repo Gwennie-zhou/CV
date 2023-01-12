@@ -1,8 +1,52 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 const dom = ref('')
 const deltaY = ref(0)  //滚轮垂直方向上的滚动值
+
+// 项目
+const projects = reactive([
+  {
+    name: 'lucky',
+    techStack: '原生JS',
+    desc: '表白程序，因为之前是做营销相关产品的开发，因此融合了一点营销的思维。程序一共分为3关小游戏，第一关是结合了营销中红包雨思想做的爱心雨闯关小游戏，第二关是石头剪刀布游戏，第三关是我画你猜游戏，最后采用营销中刮刮乐的方式表白，成功追到我男朋友了哈哈。',
+    githubLink: 'https://github.com/Gwennie-zhou/lucky',
+    CnTitle: '',
+    CnDocLink: '',
+    EnTitle: '',
+    EnDocLink: ''
+  },
+  {
+    name: 'CDNLoader',
+    techStack: '原生JS',
+    desc: '基于原先工作中“营销微组件一期拆分项目”开发的简化版CDN加载器。',
+    githubLink: 'https://github.com/Gwennie-zhou/CDNLoader',
+    CnTitle: '微组件加载器原理与代码实现',
+    CnDocLink: 'https://medium.com/@gwennie.io/%E5%BE%AE%E7%BB%84%E4%BB%B6%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-c4cee176e0e8',
+    EnTitle: 'CDNLoader Principle and Code Implementation',
+    EnDocLink: 'https://medium.com/@gwennie.io/cdnloader-principle-and-code-implementation-b792318f59d4'
+  },
+  {
+    name: 'CV',
+    techStack: 'Vue3+gsap',
+    desc: '个人在线简历网站。',
+    githubLink: 'https://github.com/Gwennie-zhou/CV',
+    CnTitle: '',
+    CnDocLink: '',
+    EnTitle: '',
+    EnDocLink: ''
+  },
+  {
+    name: 'BingDwenDwen',
+    techStack: '纯CSS',
+    desc: '纯CSS绘制的冰墩墩图案。',
+    githubLink: 'https://github.com/Gwennie-zhou/BingDwenDwen',
+    CnTitle: '',
+    CnDocLink: '',
+    EnTitle: 'Send you a BingDwenDwen Drawn with CSS',
+    EnDocLink: 'https://medium.com/@gwennie.io/send-you-a-bingdwendwen-drawn-with-css-acc063dc7558'
+  }
+])
 
 onMounted(() => {
   dom.value = document.querySelector('.open-source-pro-container')
@@ -55,38 +99,18 @@ const handleWheel = (event) => {
   <div class="open-source-pro-container" @wheel="handleWheel">
     <div class="open-source-pro-container__box">
       <div class="title">个人项目</div>
-      <div class="project">
-        <div class="name">lucky</div>
-        <div class="desc">
-          使用原生JS开发的表白程序，因为之前是做营销相关产品的开发，因此融合了一点营销的思维。程序一共分为3关小游戏，第一关是结合了营销中红包雨思想做的爱心雨闯关小游戏，第二关是石头剪刀布游戏，第三关是我画你猜游戏，最后采用营销中刮刮乐的方式表白，成功追到我男朋友了哈哈。
+      <div class="projects-wrap">
+        <div class="project" v-for="(item, index) in projects" :key="index">
+          <div class="name">{{ item.name }}</div>
+          <div class="desc">{{ item.desc }}</div>
+          <div class="tech-stack">技术栈：{{ item.techStack }}</div>
+          <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+          </div>
+          <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
+          <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
         </div>
-        <div>项目地址：<a href="https://github.com/Gwennie-zhou/lucky"
-            target="_blank">https://github.com/Gwennie-zhou/lucky</a></div>
       </div>
-      <div class="project">
-        <div class="name">CDNLoader</div>
-        <div class="desc">使用原生JS技术，基于原先工作中“营销微组件一期拆分项目”开发的简化版CDN加载器。</div>
-        <div>项目地址：<a href="https://github.com/Gwennie-zhou/CDNLoader"
-            target="_blank">https://github.com/Gwennie-zhou/CDNLoader</a></div>
-        <div>中文说明文档：<a
-            href="https://medium.com/@gwennie.io/%E5%BE%AE%E7%BB%84%E4%BB%B6%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-c4cee176e0e8"
-            target="_blank">微组件加载器原理与代码实现</a></div>
-        <div>英文说明文档：<a href="https://medium.com/@gwennie.io/cdnloader-principle-and-code-implementation-b792318f59d4"
-            target="_blank">CDNLoader Principle and Code Implementation</a></div>
-      </div>
-      <div class="project">
-        <div class="name">CV</div>
-        <div class="desc">使用Vue3框架开发的个人在线简历网站</div>
-        <div>项目地址：<a href="xxx" target="_blank">xxx（待补充）</a></div>
-      </div>
-      <div class="project">
-        <div class="name">BingDwenDwen</div>
-        <div class="desc">使用纯CSS绘制的冰墩墩图案</div>
-        <div>项目地址：<a href="https://github.com/Gwennie-zhou/BingDwenDwen"
-            target="_blank">https://github.com/Gwennie-zhou/BingDwenDwen</a></div>
-        <div>英文说明文档：<a href="https://medium.com/@gwennie.io/send-you-a-bingdwendwen-drawn-with-css-acc063dc7558"
-            target="_blank">https://medium.com/@gwennie.io/send-you-a-bingdwendwen-drawn-with-css-acc063dc7558</a></div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -127,34 +151,37 @@ const handleWheel = (event) => {
       padding: 10px;
     }
 
-    .project {
+    .projects-wrap {
       display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      flex-shrink: 0;
-      width: 400px;
-      height: 450px;
-      background: white;
-      transform: skewX(355deg);
-      border-radius: 5%;
-      box-shadow: 0 0 10px 3px #00ff91;
-      color: black;
-      font-size: 18px;
-      padding: 20px;
-      margin: 0 20px;
+      .project {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 400px;
+        height: 450px;
+        background: white;
+        transform: skewX(355deg);
+        border-radius: 5%;
+        box-shadow: 0 0 10px 3px #00ff91;
+        color: black;
+        font-size: 18px;
+        padding: 20px;
+        margin: 0 20px;
 
-      .name {
-        font-size: 24px;
-      }
+        .name {
+          font-size: 24px;
+        }
 
-      .desc {
-        color: #787878;
-      }
+        .desc {
+          color: #787878;
+        }
 
-      a {
-        color: #64d1a2;
+        a {
+          color: #64d1a2;
+        }
       }
     }
+
 
     .project:nth-child(odd) {
       margin-top: 120px;
