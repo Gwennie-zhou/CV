@@ -87,6 +87,7 @@ let commandResponses = ['Authorizing ',
 let isProcessing = false // 判断程序是否进行中以用来区别不同语句标签元素的生成
 let processTime = 0 // 程序正在执行的时间，在这个时间内，创建的都是span标签
 let lastProcess = 0 // 上一次p标签创建完（即命令行语句生成后）的时间戳
+let timerID = undefined;
 
 // 横向滚动
 const triggerHrScroll = () => {
@@ -109,8 +110,17 @@ onMounted(() => {
   outputConsoleDom = document.querySelector('.output-console')
   outputConsoleDom.style.width = (window.innerWidth / 3) * 2 + 'px'
   outputConsoleDom.style.height = window.innerHeight - 80 + 'px' //80是上下内边距
-  consoleOutput()
+  triggerConsoleOutput()
 })
+
+// 当滚动到可视区时才出现打印输出效果
+const triggerConsoleOutput = () => {
+  ScrollTrigger.create({
+    trigger: '.open-source-pro-container',
+    onToggle: self => self.isActive ? consoleOutput() : removeTimer() // 当前元素滚动到可视窗口的时候触发，否则就将定时器移除
+  })
+}
+
 
 /* 
   函数作用：就是输出打印一句语句，制造黑客编程的效果。
@@ -159,7 +169,11 @@ const consoleOutput = () => {
     }
   }
 
-  setTimeout(consoleOutput, ~~(Math.random() * 200))
+  timerID = setTimeout(consoleOutput, ~~(Math.random() * 200))
+}
+
+const removeTimer = () => {
+  clearTimeout(timerID)
 }
 
 </script>
