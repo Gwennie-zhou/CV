@@ -108,8 +108,7 @@ const triggerHrScroll = () => {
 onMounted(() => {
   triggerHrScroll()
   outputConsoleDom = document.querySelector('.output-console')
-  outputConsoleDom.style.width = (window.innerWidth / 3) * 2 + 'px'
-  outputConsoleDom.style.height = window.innerHeight - 80 + 'px' //80是上下内边距
+  outputConsoleDom.style.height = 'auto' 
   triggerConsoleOutput()
 })
 
@@ -158,11 +157,14 @@ const consoleOutput = () => {
   }
 
   // TODO: 有bug，待优化，如果创建的是span，则不应该滚动一行
-  outputConsoleDom.scrollTop = outputConsoleDom.scrollHeight
+  document.getElementsByClassName('output-wrapper')[0].scrollBy(0, 100)
   outputConsoleDom.appendChild(textEl)
 
   // 视口之外的元素进行销毁 TODO: 这种销毁的方法可能有问题
-  if (outputConsoleDom.scrollHeight > window.innerHeight) {
+  const wrapperDom = document.getElementsByClassName('output-wrapper')[0]
+  const wrapperDomHeight = wrapperDom.clientHeight;
+  const wrapperDomScrollHeight = wrapperDom.scrollHeight;
+  if (wrapperDomScrollHeight > wrapperDomHeight * 1.5) { //设置阈值为1.5一屏半
     const removeNodes = outputConsoleDom.querySelectorAll('*')
     for(let n = 0; n < ~~(removeNodes.length/3); n++) {
       outputConsoleDom.removeChild(removeNodes[n])
@@ -170,7 +172,7 @@ const consoleOutput = () => {
   }
 
   timerID = setTimeout(consoleOutput, ~~(Math.random() * 200))
-}
+} 
 
 const removeTimer = () => {
   clearTimeout(timerID)
@@ -197,7 +199,9 @@ const removeTimer = () => {
         <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
       </div>
     </div>
-    <div class="output-console"></div>
+    <div class="output-wrapper">
+      <div class="output-console"></div>
+    </div>
   </div>
 </template>
 
@@ -274,7 +278,8 @@ const removeTimer = () => {
     }
   }
 
-  .output-console {
+  .output-wrapper {
+    height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -282,8 +287,11 @@ const removeTimer = () => {
     // width: 20%;
     // height: 100vh;
     color: #00ff91;
+    overflow-y: hidden;
   }
-
+  .output-console {
+    width: 66.666vw;
+  }
 
 
 }
