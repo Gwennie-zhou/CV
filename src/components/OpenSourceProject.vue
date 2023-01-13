@@ -50,8 +50,46 @@ const projects = reactive([
   }
 ])
 
+let outputConsoleDom = ''
+
+
+let commandStart = ['Performing DNS Lookups for',
+  'Searching ',
+  'Analyzing ',
+  'Estimating Approximate Location of ',
+  'Compressing ',
+  'Requesting Authorization From : ',
+  'wget -a -t ',
+  'tar -xzf ',
+  'Entering Location ',
+  'Compilation Started of ',
+  'Downloading ']
+let commandParts = ['Data Structure',
+    'https://gwennie-zhou.github.io',
+    'Texture',
+    'TPS Reports',
+    ' .... Searching ... ',
+    'https://medium.com/@gwennie.io',
+    'https://github.com/Gwennie-zhou?tab=repositories']
+let commandResponses = ['Authorizing ',
+    'Authorized...',
+    'Access Granted..',
+    'Going Deeper....',
+    'Compression Complete.',
+    'Compilation of Data Structures Complete..',
+    'Entering Security Console...',
+    'Encryption Unsuccesful Attempting Retry...',
+    'Waiting for response...',
+    '....Searching...',
+    'Calculating Space Requirements '
+  ]
+
+let isProcessing = false // 判断程序是否进行中以用来区别不同语句标签元素的生成
+let processTime = 0 // 程序正在执行的时间，在这个时间内，创建的都是span标签
+let lastProcess = 0 // 上一次p标签创建完（即命令行语句生成后）的时间戳
+
 // 横向滚动
-const hrScroll = () => {
+const triggerHrScroll = () => {
   const sections = gsap.utils.toArray(".panel");
 
   let scrollTween = gsap.to(sections, {
@@ -67,14 +105,67 @@ const hrScroll = () => {
 }
 
 onMounted(() => {
-  hrScroll()
+  triggerHrScroll()
+  outputConsoleDom = document.querySelector('.output-console')
+  outputConsoleDom.style.width = (window.innerWidth / 3) * 2 + 'px'
+  outputConsoleDom.style.height = window.innerHeight - 80 + 'px' //80是上下内边距
+  consoleOutput()
 })
+
+/* 
+  函数作用：就是输出打印一句语句，制造黑客编程的效果。
+  语句分为两种： 
+  1、命令行语句（输入的命令、程序执行完成后的反馈）--应占一行，用p标签
+  2、程序正在执行语句（可用随机数代替）--用span标签包裹随机数
+
+  使用一个变量来判断程序是否正在执行中，即用来区分两种语句
+
+  注意：
+  1、新创建的元素追加到文档前，应该将文档往上滚动一定值（滚动的高度应该是一行的高度）
+  2、当已创建的元素已经滚动到视口之外时，将元素销毁掉
+*/
+const consoleOutput = () => {
+  let textEl = document.createElement('p')
+  if (!isProcessing) {
+    const commandType = ~~(Math.random() * 4) // 当次数没有足够多时，首位数字随机出现的概率可能会更小点
+    switch(commandType) {
+      case 0: // 命令输入
+        textEl.textContent = commandStart[~~( Math.random() * commandStart.length)] + commandParts[~~(Math.random() * commandParts.length)]
+        break;
+      case 3: 
+        isProcessing = true
+        processTime = ~~(Math.random() * 5000) // 每次程序执行的时间不等
+        lastProcess = Date.now()
+      default: // 程序响应
+        textEl.textContent = commandResponses[~~(Math.random() * commandResponses.length)]
+    }
+  } else {
+    textEl = document.createElement('span')
+    textEl.textContent = Math.random() + ' '
+    if (Date.now() > lastProcess + processTime) {
+      isProcessing = false
+    }
+  }
+
+  // TODO: 有bug，待优化，如果创建的是span，则不应该滚动一行
+  outputConsoleDom.scrollTop = outputConsoleDom.scrollHeight
+  outputConsoleDom.appendChild(textEl)
+
+  // 视口之外的元素进行销毁 TODO: 这种销毁的方法可能有问题
+  if (outputConsoleDom.scrollHeight > window.innerHeight) {
+    const removeNodes = outputConsoleDom.querySelectorAll('*')
+    for(let n = 0; n < ~~(removeNodes.length/3); n++) {
+      outputConsoleDom.removeChild(removeNodes[n])
+    }
+  }
+
+  setTimeout(consoleOutput, ~~(Math.random() * 200))
+}
 
 </script>
 
 <template>
   <div class="open-source-pro-container">
-    <div class="title">个人项目</div>
     <div class="projects-wrap">
       <div class="panel" v-for="(item, index) in projects" :key="index">
         <div class="name">{{ item.name }}</div>
@@ -86,28 +177,20 @@ onMounted(() => {
         <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
       </div>
     </div>
+    <div class="output-console"></div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .open-source-pro-container {
+  position: relative;
   display: flex;
-  align-items: center;
-  width: 200%;
+  // align-items: center;
+  width: 350%;
   height: 100vh;
   padding: 40px;
+  overflow-y: hidden;
 
-  .title {
-    font-weight: 700;
-    font-size: 28px;
-    margin-top: 40px;
-    margin-right: 40px;
-    writing-mode: tb-rl;
-    letter-spacing: 90px;
-    text-align: center;
-    background: #52d600;
-    padding: 10px;
-  }
   .projects-wrap {
     display: flex;
 
@@ -140,7 +223,17 @@ onMounted(() => {
     }
   }
 
+  .output-console {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    // width: 20%;
+    // height: 100vh;
+    color: #00ff91;
+  }
 
- 
+
+
 }
 </style>
