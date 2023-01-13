@@ -181,7 +181,13 @@ const removeTimer = () => {
 <template>
   <div class="open-source-pro-container">
     <div class="projects-wrap">
-      <div class="panel" v-for="(item, index) in projects" :key="index">
+      <div class="introduction panel">
+        <div class="title">Are you ready? </div>
+        <p>My personal project exhibition </p>
+        <p>starts here<span class="underline">_</span></p>
+        <div class="scroll">scroll</div>
+      </div>
+      <div class="project panel" v-for="(item, index) in projects" :key="index">
         <div class="name">{{ item.name }}</div>
         <div class="desc">{{ item.desc }}</div>
         <div class="tech-stack">技术栈：{{ item.techStack }}</div>
@@ -198,17 +204,49 @@ const removeTimer = () => {
 <style lang="less" scoped>
 .open-source-pro-container {
   position: relative;
-  display: flex;
-  // align-items: center;
-  width: 350%;
+  width: 6000px;
   height: 100vh;
-  padding: 40px;
   overflow-y: hidden;
 
   .projects-wrap {
+    position: absolute;
+    z-index: 1;
+    top: 40px;
+    left: 600px;
     display: flex;
-
     .panel {
+      margin-right: 300px;
+    }
+    .introduction {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 600px;
+      height: 500px;
+      border: 4px solid white;
+      font-size: 30px;
+      .title {
+        font-size: 55px;
+        padding-bottom: 20px;
+      }
+      .underline {
+        visibility: visible;
+        animation: twinkle 1s infinite;
+      }
+      .scroll {
+        width: 80px;
+        height: 80px;
+        border: 1px solid #00ff91;
+        border-radius: 50%;
+        line-height: 80px;
+        text-align: center;
+        font-size: 20px;
+        margin-top: 80px;
+      }
+    }
+
+    .project {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
@@ -221,7 +259,6 @@ const removeTimer = () => {
       color: black;
       font-size: 18px;
       padding: 20px;
-      margin: 0 20px;
 
       .name {
         font-size: 24px;
@@ -249,5 +286,11 @@ const removeTimer = () => {
 
 
 
+}
+
+@keyframes twinkle {
+  50% {
+    visibility: hidden;
+  }
 }
 </style>
