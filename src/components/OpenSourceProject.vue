@@ -51,6 +51,7 @@ const projects = reactive([
 ])
 
 let outputConsoleDom = ''
+let outputWrapperDom = ''
 
 
 let commandStart = ['Performing DNS Lookups for',
@@ -106,9 +107,9 @@ const triggerHrScroll = () => {
 }
 
 onMounted(() => {
-  triggerHrScroll()
   outputConsoleDom = document.querySelector('.output-console')
-  outputConsoleDom.style.height = 'auto' 
+  outputWrapperDom = document.querySelector('.output-wrapper')
+  triggerHrScroll()
   triggerConsoleOutput()
 })
 
@@ -155,15 +156,12 @@ const consoleOutput = () => {
       isProcessing = false
     }
   }
-
-  // TODO: 有bug，待优化，如果创建的是span，则不应该滚动一行
-  document.getElementsByClassName('output-wrapper')[0].scrollBy(0, 100)
+  // 滚动容器到底部再插入新元素
+  outputWrapperDom.scrollBy(0, 100)
   outputConsoleDom.appendChild(textEl)
 
-  // 视口之外的元素进行销毁 TODO: 这种销毁的方法可能有问题
-  const wrapperDom = document.getElementsByClassName('output-wrapper')[0]
-  const wrapperDomHeight = wrapperDom.clientHeight;
-  const wrapperDomScrollHeight = wrapperDom.scrollHeight;
+  const wrapperDomHeight = outputWrapperDom.clientHeight;
+  const wrapperDomScrollHeight = outputWrapperDom.scrollHeight;
   if (wrapperDomScrollHeight > wrapperDomHeight * 1.5) { //设置阈值为1.5一屏半
     const removeNodes = outputConsoleDom.querySelectorAll('*')
     for(let n = 0; n < ~~(removeNodes.length/3); n++) {
@@ -291,6 +289,7 @@ const removeTimer = () => {
   }
   .output-console {
     width: 66.666vw;
+    height: auto;
   }
 
 
