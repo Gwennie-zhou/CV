@@ -236,7 +236,7 @@ const removeTimer = () => {
       }
       .underline {
         visibility: visible;
-        animation: twinkle 1s infinite;
+        animation: twinkle 1s infinite ease;
       }
       .scroll {
         width: 80px;
@@ -297,8 +297,14 @@ const removeTimer = () => {
 }
 
 @keyframes twinkle {
+  0% {
+    opacity: 0;
+  }
   50% {
-    visibility: hidden;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>
