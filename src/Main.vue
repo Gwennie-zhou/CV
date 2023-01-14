@@ -4,7 +4,8 @@ import { gsap } from "gsap";
 import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
-import Experience from "./components/Experience.vue";
+import WorkExperience from "./components/WorkExperience.vue";
+import ProjectExperience from "./components/ProjectExperience.vue";
 import OpenSourceProject from "./components/OpenSourceProject.vue";
 import Blog from './components/Blog.vue'
 import SelfEvaluation from "./components/SelfEvaluation.vue";
@@ -89,11 +90,16 @@ function close() {
       <PersonalInfo />
       <div class="hr"></div>
       <Skill />
-      <Experience />
+      <div class="hr"></div>
+      <WorkExperience />
+      <div class="hr"></div>
+      <ProjectExperience />
+      <div class="hr"></div>
       <div class="cursor"></div>
     </div>
-    <OpenSourceProject />
+
     <Blog />
+    <OpenSourceProject />
     <SelfEvaluation />
 
     <!-- 弹窗按钮 -->
