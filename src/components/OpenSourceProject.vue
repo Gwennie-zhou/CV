@@ -89,19 +89,21 @@ let isProcessing = false // 判断程序是否进行中以用来区别不同语�
 let processTime = 0 // 程序正在执行的时间，在这个时间内，创建的都是span标签
 let lastProcess = 0 // 上一次p标签创建完（即命令行语句生成后）的时间戳
 let timerID = undefined;
+let scrollWidth = 0 // 可滚动的宽度
+let scrollX = 0 // 水平滚动的距离
 
 // 横向滚动
 const triggerHrScroll = () => {
-  const sections = gsap.utils.toArray(".panel");
-
-  let scrollTween = gsap.to(sections, {
-    x: -600 * (sections.length - 1),
+  gsap.to('.projects-wrap', {
+    x: -scrollX,
     ease: 'none',
     scrollTrigger: {
       trigger: '.open-source-pro-container', //触发滚动的元素
-      start: "top top", // 当触发器的顶部碰到视口的顶部时
+      start: 'top top', // 当触发器的顶部碰到视口的顶部时
+      end: `+=${scrollWidth}`, // 滚动条结束的位置
       pin: true, // 在执行滚动动画时固定触发器元素
-      scrub: 0.1, // 触发器0.1s后跟上滚动条进度
+      scrub: 1, // 触发器与滚动条绑定
+      markers: true // 开发时的便于查看的标记
     }
   })
 }
@@ -109,6 +111,10 @@ const triggerHrScroll = () => {
 onMounted(() => {
   outputConsoleDom = document.querySelector('.output-console')
   outputWrapperDom = document.querySelector('.output-wrapper')
+
+  scrollWidth = document.querySelector('.projects-wrap').scrollWidth
+  scrollX = scrollWidth - window.innerWidth;
+
   triggerHrScroll()
   triggerConsoleOutput()
 })
@@ -211,10 +217,9 @@ const removeTimer = () => {
   overflow-y: hidden;
 
   .projects-wrap {
-    position: absolute;
-    z-index: 1;
-    top: 40px;
-    left: 600px;
+    width: auto;
+    height: 100%;
+    padding: 15vh 20vh 0 80vh;
     display: flex;
     .panel {
       margin-right: 300px;
@@ -224,8 +229,8 @@ const removeTimer = () => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 600px;
-      height: 500px;
+      width: 700px;
+      height: 600px;
       border: 4px solid white;
       font-size: 30px;
       .title {
@@ -252,10 +257,9 @@ const removeTimer = () => {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      width: 600px;
-      height: 500px;
+      width: 700px;
+      height: 600px;
       background: white;
-      transform: skewX(355deg);
       border-radius: 5%;
       box-shadow: 0 0 10px 3px #00ff91;
       color: black;
