@@ -38,7 +38,7 @@
   margin-top: 60px;
   margin-left: 50px;
   font-size: 30px;
-  height: 700px;
+  height: 73vh;
   .text-wrap {
     margin: 30px;
   }
@@ -47,7 +47,7 @@
   }
   .text {
     visibility: hidden;
-    font-size: 38px;
+    font-size: 60px;
     padding: 4px;
     margin-bottom: 20px;
     width: 0;
@@ -78,10 +78,8 @@
 }
 
 .down {
-  position: absolute;
-  bottom: 50px;
-  left: 40px;
   font-size: 23px;
+  margin-left: 60px;
   .arrow-down {
     width: 60px;
     vertical-align: middle;
