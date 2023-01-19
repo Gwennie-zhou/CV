@@ -1,10 +1,29 @@
 <script setup>
+// 动画库
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+import { onMounted } from "vue";
+gsap.registerPlugin(ScrollTrigger);
+
+onMounted(() => {
+  gsap.from('.fn-top', {
+    scrollTrigger: '.fn-top',
+    y: -500,
+    duration: 0.8
+  })
+  gsap.from('.fn-bottom', {
+    scrollTrigger: '.fn-top',
+    y: window.innerHeight,
+    duration: 0.8
+  })
+})
+
 </script>
 
 <template>
   <div class="prologue-container">
     <div class="center">
-      <div class="animate__animated animate__bounce"><span class="theme-color">function</span> Welcome ( ) {
+      <div class="fn-top"><span class="theme-color">function</span> Welcome ( ) {
       </div>
       <div class="text-wrap">
         <div class="inline-block">
@@ -23,7 +42,7 @@
           <div class="text theme-color">}</div>
         </div>
       </div>
-      <div class="animate__animated animate__bounce">}</div>
+      <div class="fn-bottom">}</div>
     </div>
     <div class="down">
       <img src="@/assets/images/arrow_down.png" alt="" class="arrow-down">
@@ -57,19 +76,19 @@
   }
   .inline-block:nth-child(1) .text {
     animation: typing 2s steps(15, end) forwards, flicker .5s 4;
-    animation-delay: 0.1s;
+    animation-delay: 0.8s;
   }
   .inline-block:nth-child(3) .text {
     animation: typing 1s steps(15, end) forwards, flicker .5s 2;
-    animation-delay: 2s;
+    animation-delay: 2.8s;
   }
  .inline-block:nth-child(5) .text {
     animation: typing 2s steps(15, end) forwards, flicker .5s 4;
-    animation-delay: 3s;
+    animation-delay: 3.8s;
   }
   .inline-block:nth-child(7) .text {
     animation: typing .5s steps(15, end) forwards, flicker 1s infinite;
-    animation-delay: 5s;
+    animation-delay: 5.8s;
   }
   .indent {
     padding-left: 24px;
