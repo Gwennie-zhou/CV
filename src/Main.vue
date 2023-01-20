@@ -1,6 +1,4 @@
 <script setup>
-import { gsap } from "gsap";
-
 import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
@@ -11,6 +9,11 @@ import Blog from './components/Blog.vue'
 import SelfEvaluation from "./components/SelfEvaluation.vue";
 
 import { onMounted, ref, reactive } from 'vue';
+
+// 动画库
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
 
 const isOpen = ref(false)
 const tags = reactive([
@@ -43,8 +46,11 @@ const tags = reactive([
     className: 'evaluation-container'
   }])
 
-onMounted(() => {
+let sections = undefined
 
+onMounted(() => {
+  sections = gsap.utils.toArray('.hidden-float')
+  hiddenFloat()
 })
 
 function jump(className) {
@@ -67,6 +73,19 @@ function close() {
   isOpen.value = false
   document.body.style.overflow = ''
 }
+
+const hiddenFloat = () => {
+  sections.forEach(item => {
+    ScrollTrigger.create({
+      trigger: item,
+      start: 'top 40%',
+      toggleClass: {
+        targets: '.floating-btn',
+        className: 'hidden'
+      }
+    })
+  })
+}
 </script>
 
 <template>
@@ -87,7 +106,7 @@ function close() {
     <Prologue />
 
     <div class="cursor-wrap" @mousemove="move">
-      <PersonalInfo />
+      <PersonalInfo class="hidden-float"/>
       <div class="hr"></div>
       <Skill />
       <div class="hr"></div>
@@ -99,7 +118,7 @@ function close() {
     </div>
 
     <Blog />
-    <OpenSourceProject />
+    <OpenSourceProject class="hidden-float" />
     <SelfEvaluation />
 
     <!-- 弹窗按钮 -->

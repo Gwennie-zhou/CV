@@ -40,3 +40,7 @@ body::-webkit-scrollbar-thumb{
   font-weight: 700;
   margin-bottom: 30px;
 }
+
+.hidden {
+  display: none;
+}
