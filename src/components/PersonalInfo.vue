@@ -2,10 +2,35 @@
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 gsap.registerPlugin(ScrollTrigger);
 
+const keywords = ['前端开发', '本科学历', '韩山师范学院', '毕业:2021年', '计算机学院', '好奇心', '努力', '上进', '认真', '负责', '团结协作', '细心', '贴心', '求知欲', '1998年出生', '英语六级']
+
+let keywordsInfo = ref({
+  info: []
+})
+
+const createKeywordInfo = () => {
+  keywordsInfo.value.info = keywords.map((item, index) => ({
+    id: index,
+    keyword: item,
+    top: ~~(Math.random() * document.querySelector('.keywords-wrap').clientHeight),
+    left: ~~(Math.random() * document.querySelector('.keywords-wrap').clientWidth),
+    scale: 0,
+    blur: 0
+  }))
+}
+
+let keywordsWrapDom = ''
+let showList = []
+let keywordDomList = undefined
+
 onMounted(() => {
+  createKeywordInfo()
+  keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
+  console.log("keywordDomList", keywordDomList);
+  animate()
   ScrollTrigger.create({
     trigger: '.per-info-container',
     start: 'top 20%',
@@ -20,22 +45,55 @@ onMounted(() => {
     y: '-50%',
     duration: 0.5,
     delay: 0.3,
-    autoAlpha: 0,
+    autoAlpha: 0, //相当于opacity透明度
     scrollTrigger: {
       trigger: '.per-info-container',
       start: 'top 20%',
       toggleActions: 'restart none none none'
     },
   })
+
 }) 
 
+// 关键字出现动画效果 
+const animate = () => {
+  console.log(keywordDomList);
+  requestAnimationFrame(() => {
+    keywordsInfo.value.info.forEach(item => {
+      item.scale += 0.05
+      if (item.scale > 3) {
+        item.blur += 0.01
+      }
+      if (item.scale > 7) {
+        keywordDomList[item.id].remove()
+      }
+    })
+
+    document.querySelectorAll('.keywords-wrap .keyword').length && animate()
+  })
+}
+const test = () => {
+  console.log("keywordDomList---", keywordDomList);
+}
 </script>
 
 <template>
   <div class="per-info-container">
-    <div class="headline-wrap">
-      <div class="headline">Welcome to the personal information module!</div>
-      <div class="rectangle"></div>
+    <div class="guide">
+      <div class="headline-wrap">
+        <div class="headline">Welcome to the personal information module!</div>
+        <div class="rectangle"></div>
+      </div>
+      <div class="scroll">scroll</div>
+    </div>
+
+    <div class="keywords-wrap">
+      <div class="test" @click="test">测试</div>
+      <span v-for="item in keywordsInfo.info" 
+        :key="item.id" 
+        class="keyword"
+        :style="{'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)`}"
+        >{{ item.keyword }}</span>
     </div>
 
     <!-- <div class="card-wrap">
@@ -66,11 +124,29 @@ onMounted(() => {
   background-size: cover;
   width: 100%;
   height: 100vh;
-  .headline-wrap {
+  .guide {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height: 60%;
+    .scroll {
+      width: 100px;
+      height: 100px;
+      border: 1px solid white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 100px;
+      color: #00d67a;
+      font-size: 24px;
+      margin-top: 200px;
+    }
+  }
+  .headline-wrap {
     .headline {
       color: white;
       font-size: 60px;
@@ -86,6 +162,18 @@ onMounted(() => {
     }
     .extend {
       transform: scaleX(1); //scaleX将会从原点向两边扭曲一定程度
+    }
+  }
+  .keywords-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    .keyword {
+      position: absolute;
+      color: #00d67a;
+      transform: scale(0);
     }
   }
   .card-wrap {
