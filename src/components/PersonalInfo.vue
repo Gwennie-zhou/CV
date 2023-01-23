@@ -1,11 +1,44 @@
 <script setup>
+// 动画库
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger.js";
+import { onMounted, ref } from "vue";
+gsap.registerPlugin(ScrollTrigger);
+
+onMounted(() => {
+  ScrollTrigger.create({
+    trigger: '.per-info-container',
+    start: 'top 20%',
+    toggleClass: {
+      targets: ".rectangle", 
+      className: "extend",
+    },
+    markers: true
+  })
+
+  gsap.from('.headline', {
+    y: '-50%',
+    duration: 0.5,
+    delay: 0.3,
+    autoAlpha: 0,
+    scrollTrigger: {
+      trigger: '.per-info-container',
+      start: 'top 20%',
+      toggleActions: 'restart none none none'
+    },
+  })
+}) 
 
 </script>
 
 <template>
   <div class="per-info-container">
-    <div class="title">&lt;personal_information /&gt;</div>
-    <div class="card-wrap">
+    <div class="headline-wrap">
+      <div class="headline">Welcome to the personal information module!</div>
+      <div class="rectangle"></div>
+    </div>
+
+    <!-- <div class="card-wrap">
       <img src="@/assets/images/card.jpg" alt="" class="card-img">
       <div class="info">
         <div class="left">
@@ -21,26 +54,39 @@
           <li>专业：信息管理与信息系统</li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <style lang="less" scoped>
 .per-info-container {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   border-top: 1px solid #707070;
+  background: url('../assets/images/hacker_bg.webp') no-repeat;
+  background-size: cover;
   width: 100%;
-  height: 97vh;
-  .title {
-    font-size: 50px;
-    font-family: "Fira Mono", monospace;
-    font-weight: 700;
-    line-height: 60px;
-    margin-bottom: 30px;
+  height: 100vh;
+  .headline-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .headline {
+      color: white;
+      font-size: 60px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .rectangle {
+      width: 60vw;
+      height: 15px;
+      background: white;
+      transform: scaleX(0);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .extend {
+      transform: scaleX(1); //scaleX将会从原点向两边扭曲一定程度
+    }
   }
   .card-wrap {
     position: relative;
@@ -73,5 +119,9 @@
     }
   }
   
+}
+.active {
+  transform: scale(5) !important;
+  filter: blur(3px);
 }
 </style>
