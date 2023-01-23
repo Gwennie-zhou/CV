@@ -2,7 +2,7 @@
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, nextTick } from "vue";
 gsap.registerPlugin(ScrollTrigger);
 
 const keywords = ['前端开发', '本科学历', '韩山师范学院', '毕业:2021年', '计算机学院', '好奇心', '努力', '上进', '认真', '负责', '团结协作', '细心', '贴心', '求知欲', '1998年出生', '英语六级']
@@ -26,11 +26,13 @@ let keywordsWrapDom = ''
 let showList = []
 let keywordDomList = undefined
 
-onMounted(() => {
+onMounted(async () => {
   createKeywordInfo()
+  await nextTick()
   keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
   console.log("keywordDomList", keywordDomList);
   animate()
+  running()
   ScrollTrigger.create({
     trigger: '.per-info-container',
     start: 'top 20%',
@@ -57,23 +59,35 @@ onMounted(() => {
 
 // 关键字出现动画效果 
 const animate = () => {
-  console.log(keywordDomList);
   requestAnimationFrame(() => {
-    keywordsInfo.value.info.forEach(item => {
-      item.scale += 0.05
-      if (item.scale > 3) {
-        item.blur += 0.01
-      }
-      if (item.scale > 7) {
-        keywordDomList[item.id].remove()
-      }
+    keywordsInfo.value.info.forEach((item, index) => {
+      setTimeout(() => {
+        item.scale += 0.05
+        if (item.scale > 3) {
+          item.blur += 0.01
+        }
+        if (item.scale > 7) {
+          keywordDomList[item.id].remove()
+        }
+      }, 1 * 500 * index)
     })
 
     document.querySelectorAll('.keywords-wrap .keyword').length && animate()
   })
 }
-const test = () => {
-  console.log("keywordDomList---", keywordDomList);
+
+// 进度条
+const running = () => {
+  setTimeout(() => {
+    gsap.to('.keywords-wrap .bar', {
+      width: '100%',
+      duration: 11,
+      ease: 'linear',
+      onComplete: () => {
+        document.querySelector('.keywords-wrap').style.display = 'none'
+      }
+    })
+  })
 }
 </script>
 
@@ -88,12 +102,17 @@ const test = () => {
     </div>
 
     <div class="keywords-wrap">
-      <div class="test" @click="test">测试</div>
-      <span v-for="item in keywordsInfo.info" 
-        :key="item.id" 
-        class="keyword"
-        :style="{'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)`}"
-        >{{ item.keyword }}</span>
+      <div class="progress-wrap">
+        <div class="progress">程序执行中，请稍候...</div>
+        <div class="bar"></div>
+      </div>
+      <div class="keywords">
+        <span v-for="item in keywordsInfo.info" 
+          :key="item.id" 
+          class="keyword"
+          :style="{'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)`}"
+          >{{ item.keyword }}</span>
+      </div>
     </div>
 
     <!-- <div class="card-wrap">
@@ -170,10 +189,40 @@ const test = () => {
     height: 100%;
     top: 0;
     left: 0;
+    .progress-wrap {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: 800px;
+      height: 25px;
+      border-radius: 15px;
+      overflow: hidden;
+      .progress {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        border: 1px solid red;
+        border-radius: 15px;
+        text-align: center;
+      }
+      .bar {
+        position: absolute;
+        z-index: 1;
+        width: 0%;
+        height: 100%;
+        border-start-start-radius: 15px;
+        border-end-start-radius: 15px;
+        background: red;
+      }
+    }
     .keyword {
       position: absolute;
       color: #00d67a;
       transform: scale(0);
+      width: 100px;
     }
   }
   .card-wrap {
