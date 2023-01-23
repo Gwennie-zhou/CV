@@ -31,8 +31,10 @@ onMounted(async () => {
   await nextTick()
   keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
   console.log("keywordDomList", keywordDomList);
-  animate()
-  running()
+  // animate()
+  // running()
+
+  showSelfImg()
   ScrollTrigger.create({
     trigger: '.per-info-container',
     start: 'top 20%',
@@ -56,6 +58,22 @@ onMounted(async () => {
   })
 
 }) 
+// 图片滚入场
+const showSelfImg = () => {
+  const sections = document.querySelectorAll('.self-img')
+  sections.forEach((item, index) => {
+    gsap.from(item, {
+      y: index % 2 === 0 ? '100%' : '-100%',
+      scrollTrigger: {
+        trigger: '.per-info-container',
+        start: 'top top',
+        end: '+=100vh',
+        pin: true,
+        scrub: 0.3,
+      }
+    })
+  })
+}
 
 // 关键字出现动画效果 
 const animate = () => {
@@ -101,6 +119,11 @@ const running = () => {
       <div class="scroll">scroll</div>
     </div>
 
+    <div class="self-img-wrap">
+      <img src="@/assets/images/self_left.jpg" alt="" class="self-img">
+      <img src="@/assets/images/self_center.jpg" alt="" class="self-img">
+      <img src="@/assets/images/self_right.jpg" alt="" class="self-img">
+    </div>
     <div class="keywords-wrap">
       <div class="progress-wrap">
         <div class="progress">程序执行中，请稍候...</div>
@@ -148,6 +171,7 @@ const running = () => {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -183,6 +207,19 @@ const running = () => {
       transform: scaleX(1); //scaleX将会从原点向两边扭曲一定程度
     }
   }
+  .self-img-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .self-img {
+      width: 33.33%;
+      object-fit: contain;
+    }
+  }
   .keywords-wrap {
     position: absolute;
     width: 100%;
@@ -199,6 +236,7 @@ const running = () => {
       height: 25px;
       border-radius: 15px;
       overflow: hidden;
+      display: none;
       .progress {
         position: absolute;
         z-index: 2;
