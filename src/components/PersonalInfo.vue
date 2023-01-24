@@ -2,7 +2,7 @@
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-import { onMounted, reactive, ref, nextTick } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 gsap.registerPlugin(ScrollTrigger);
 
 const keywords = ['前端开发', '本科学历', '韩山师范学院', '毕业:2021年', '计算机学院', '好奇心', '努力', '上进', '认真', '负责', '团结协作', '细心', '贴心', '求知欲', '1998年出生', '英语六级']
@@ -11,6 +11,90 @@ let keywordsInfo = ref({
   info: []
 })
 
+let keywordDomList = undefined
+
+/* 个人信息模块动画入场顺序：
+1、当个人信息模块开始出现在视口30%时，出现引导语 -- Welcome to ...
+2、引导语动画结束后，个人照片滚动入场
+3、当个人照片全部显示完整后，再滚动后，个人照片和引导语消失
+4、随即进度条显示，关键字显示
+5、关键字动画完成后，再一滚动，卡片出现，字体云出现
+
+*/
+
+onMounted(async () => {
+
+  guideAnimate()
+  imgAnimate()
+  running()
+
+  createKeywordInfo()
+  await nextTick()
+
+  keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
+  keywordAnimate()
+
+  entranceAnimate()
+})
+
+// 1、引导语入场动画
+const guideAnimate = () => {
+  const t1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.per-info-container',
+      start: 'top 20%',
+      toggleActions: 'restart none none none',
+      pin: true,
+      markers: true,
+      onComplete: imgAnimate
+    }
+  })
+  // 白色条形框弹跳入场
+  t1.to('.rectangle', {
+    scale: 1,
+    duration: 0.3,
+    ease: 'ease: "back.out(1.7)"'
+  })
+  // 引导语由上往下入场
+  t1.from('.headline', {
+    y: '-50%',
+    duration: 0.5,
+    ease: "power2.out",
+    autoAlpha: 0
+  })
+}
+
+// 2、个人照片滚动入场动画
+const imgAnimate = () => {
+  const sections = document.querySelectorAll('.self-img')
+  sections.forEach((item, index) => {
+    gsap.from(item, {
+      y: index % 2 === 0 ? '0vh' : '100vh',
+      autoAlpha: 0,
+      scrollTrigger: {
+        trigger: '.self-img-wrap',
+        start: 'top 20%',
+        pin: '.per-info-container',
+        scrub: 0.3,
+      }
+    })
+  })
+}
+
+
+// 4、进度条显示
+const running = () => {
+  gsap.to('.keywords-wrap .bar', {
+    width: '100%',
+    duration: 11,
+    ease: 'linear',
+    onComplete: () => {
+      document.querySelector('.keywords-wrap').style.display = 'none'
+    }
+  })
+}
+
+// 关键字信息生成
 const createKeywordInfo = () => {
   keywordsInfo.value.info = keywords.map((item, index) => ({
     id: index,
@@ -22,53 +106,27 @@ const createKeywordInfo = () => {
   }))
 }
 
-let keywordsWrapDom = ''
-let showList = []
-let keywordDomList = undefined
+// 4、关键字出现动画效果 
+const keywordAnimate = () => {
+  requestAnimationFrame(() => {
+    keywordsInfo.value.info.forEach((item, index) => {
+      setTimeout(() => {
+        item.scale += 0.05
+        if (item.scale > 3) {
+          item.blur += 0.01
+        }
+        if (item.scale > 7) {
+          keywordDomList[item.id].remove()
+        }
+      }, 1 * 500 * index)
+    })
 
-/* 个人信息模块动画入场顺序：
-1、出现引导语 -- Welcome to ...
-2、个人照片滚动入场
-3、个人照片和引导语消失
-4、进度条显示，关键字显示
-5、卡片出现，字体云出现
-
-*/
-
-onMounted(async () => {
-  // createKeywordInfo()
-  await nextTick()
-  keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
-  // animate()
-  // running()
-
-  // showSelfImg()
-  ScrollTrigger.create({
-    trigger: '.per-info-container',
-    start: 'top 20%',
-    toggleClass: {
-      targets: ".rectangle", 
-      className: "extend",
-    },
-    markers: true
+    document.querySelectorAll('.keywords-wrap .keyword').length && animate()
   })
+}
 
-  gsap.from('.headline', {
-    y: '-50%',
-    duration: 0.5,
-    delay: 0.3,
-    autoAlpha: 0, //相当于opacity透明度
-    scrollTrigger: {
-      trigger: '.per-info-container',
-      start: 'top 20%',
-      toggleActions: 'restart none none none'
-    },
-  })
 
-  entranceAnimate()
-})
-
-// 字体云出场方式 先中间出现，再移向左边，然后卡片和段落再由下往上入场
+// 5、字体云出场方式 先中间出现，再移向左边，然后卡片和段落再由下往上入场
 const entranceAnimate = () => {
   console.log("entranceAnimate");
   const t1 = gsap.timeline({
@@ -95,60 +153,11 @@ const entranceAnimate = () => {
   })
 }
 
-// 图片滚入场
-const showSelfImg = () => {
-  const sections = document.querySelectorAll('.self-img')
-  sections.forEach((item, index) => {
-    gsap.from(item, {
-      y: index % 2 === 0 ? '100%' : '-100%',
-      scrollTrigger: {
-        trigger: '.per-info-container',
-        start: 'top top',
-        end: '+=100vh',
-        pin: true,
-        scrub: 0.3,
-      }
-    })
-  })
-}
-
-// 关键字出现动画效果 
-const animate = () => {
-  requestAnimationFrame(() => {
-    keywordsInfo.value.info.forEach((item, index) => {
-      setTimeout(() => {
-        item.scale += 0.05
-        if (item.scale > 3) {
-          item.blur += 0.01
-        }
-        if (item.scale > 7) {
-          keywordDomList[item.id].remove()
-        }
-      }, 1 * 500 * index)
-    })
-
-    document.querySelectorAll('.keywords-wrap .keyword').length && animate()
-  })
-}
-
-// 进度条
-const running = () => {
-  setTimeout(() => {
-    gsap.to('.keywords-wrap .bar', {
-      width: '100%',
-      duration: 11,
-      ease: 'linear',
-      onComplete: () => {
-        document.querySelector('.keywords-wrap').style.display = 'none'
-      }
-    })
-  })
-}
 </script>
 
 <template>
   <div class="per-info-container">
-    <!-- <div class="guide">
+    <div class="guide">
       <div class="headline-wrap">
         <div class="headline">Welcome to the personal information module!</div>
         <div class="rectangle"></div>
@@ -167,13 +176,12 @@ const running = () => {
         <div class="bar"></div>
       </div>
       <div class="keywords">
-        <span v-for="item in keywordsInfo.info" 
-          :key="item.id" 
-          class="keyword"
-          :style="{'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)`}"
-          >{{ item.keyword }}</span>
+        <span v-for="item in keywordsInfo.info" :key="item.id" class="keyword"
+          :style="{ 'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)` }">{{
+            item.keyword
+          }}</span>
       </div>
-    </div> -->
+    </div>
 
     <div class="conclusion">
       <div class="wordcloud-wrap">
@@ -230,12 +238,12 @@ const running = () => {
     height: 60%;
 
     .scroll {
-      width: 100px;
-      height: 100px;
-      border: 1px solid white;
+      width: 90px;
+      height: 90px;
+      border: 2px solid white;
       border-radius: 50%;
       text-align: center;
-      line-height: 100px;
+      line-height: 90px;
       color: #00d67a;
       font-size: 24px;
       margin-top: 200px;
@@ -255,11 +263,6 @@ const running = () => {
       height: 15px;
       background: white;
       transform: scaleX(0);
-      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .extend {
-      transform: scaleX(1); //scaleX将会从原点向两边扭曲一定程度
     }
   }
 
