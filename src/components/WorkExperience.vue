@@ -60,7 +60,6 @@
 .work-container {
   display: flex;
   width: 100%;
-  height: 50vh;
 
   .left {
     width: 30%;

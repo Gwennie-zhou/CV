@@ -14,23 +14,28 @@
         </li>
       </ul>
     </div>
-    
+
     <Prologue />
-    
+
     <PersonallInfoTemp />
 
-    <div>
-        123123
-        123
-        123
-        123
-        123
-        123
-        12
-        312
-        3
-    </div>
+    <div class="hr"></div>
 
+    <Skill />
+
+    <div class="hr"></div>
+
+    <WorkExperience />
+
+    <div class="hr"></div>
+
+    <ProjectExperience />
+    
+    <Blog />
+
+    <OpenSourceProject class="hidden-float" />
+
+    <SelfEvaluation />
   </div>
 </template>
 
@@ -39,8 +44,14 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
 import { onMounted, reactive } from "vue";
-import Prologue from './components/Prologue.vue';
-import PersonallInfoTemp from './components/PersonallInfoTemp.vue'
+import Prologue from "./components/Prologue.vue";
+import PersonallInfoTemp from "./components/PersonallInfoTemp.vue";
+import Skill from "./components/Skill.vue";
+import WorkExperience from "./components/WorkExperience.vue";
+import ProjectExperience from "./components/ProjectExperience.vue";
+import Blog from './components/Blog.vue'
+import OpenSourceProject from "./components/OpenSourceProject.vue";
+import SelfEvaluation from "./components/SelfEvaluation.vue";
 gsap.registerPlugin(ScrollTrigger);
 
 // 横向滚动
@@ -120,12 +131,10 @@ const tags = reactive([
 ]);
 
 function jump(className) {
-  document.querySelector(`.${className}`).scrollIntoView()
+  document.querySelector(`.${className}`).scrollIntoView();
 }
 
-
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 
 <style lang="less" scoped>

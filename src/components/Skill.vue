@@ -174,7 +174,6 @@ onMounted(() => {
 .skill-container {
   display: flex;
   width: 100%;
-  height: 50vh;
   .left {
     flex: 1;
     padding: 50px 30px;

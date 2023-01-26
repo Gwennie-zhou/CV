@@ -50,8 +50,8 @@
     left: 50%;
     transform: translate(-50%,-50%);
     z-index: 1;
-    width: 800px;
-    height: 800px;
+    height: 600px;
+    object-fit: contain;
   }
 }
 </style>
