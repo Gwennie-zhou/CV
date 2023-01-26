@@ -67,17 +67,19 @@ const guideAnimate = () => {
 // 2、个人照片滚动入场动画
 const imgAnimate = () => {
   const sections = document.querySelectorAll('.self-img')
+  const t1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.self-img-wrap',
+      start: 'top top',
+      pin: '.per-info-container',
+      scrub: 0.3,
+    }
+  })
   sections.forEach((item, index) => {
-    gsap.from(item, {
-      y: index % 2 === 0 ? '0vh' : '100vh',
-      autoAlpha: 0,
-      scrollTrigger: {
-        trigger: '.self-img-wrap',
-        start: 'top 20%',
-        pin: '.per-info-container',
-        scrub: 0.3,
-      }
-    })
+    t1.from(item, {
+      yPercent: index % 2 === 0 ? 100: -100, //变换百分比，相对于自身高度的值
+      opacity: 0
+    }, '<')   // "<" 表示与上个补间动画同时进行
   })
 }
 
