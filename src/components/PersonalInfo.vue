@@ -42,22 +42,22 @@ const guideAnimate = () => {
   const t1 = gsap.timeline({
     scrollTrigger: {
       trigger: '.per-info-container',
-      start: 'top 20%',
+      start: 'top top',
       toggleActions: 'restart none none none',
       pin: true,
       markers: true,
-      onComplete: imgAnimate
     }
   })
   // 白色条形框弹跳入场
-  t1.to('.rectangle', {
-    scale: 1,
+  t1.from('.rectangle', {
+    scale: 0,
     duration: 0.3,
     ease: 'ease: "back.out(1.7)"'
   })
   // 引导语由上往下入场
   t1.from('.headline', {
-    y: '-50%',
+    yPercent: 100,
+    opacity: 0,
     duration: 0.5,
     ease: "power2.out",
     autoAlpha: 0
@@ -264,7 +264,6 @@ const entranceAnimate = () => {
       width: 60vw;
       height: 15px;
       background: white;
-      transform: scaleX(0);
     }
   }
 
