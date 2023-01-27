@@ -49,29 +49,29 @@ const animate = () => {
   })
   animation
     //引导语和长条框入场
-    .from('.rectangle', { scale: 0, duration: 1, ease: 'power2'})
-    .from('.headline', { yPercent: -100, opacity: 0, duration: 1, ease: 'power2.out'}, "<")
+    .from('.rectangle', { scale: 0, duration: 4, ease: 'power2'})
+    .from('.headline', { yPercent: -100, opacity: 0, duration: 4, ease: 'power2.out'}, "<")
     // 个人照片入场
-    .from('.img1', { yPercent: 100, opacity: 0, duration: 2})
-    .from('.img2', { yPercent: -100, opacity: 0, duration: 2}, "<")
-    .from('.img3', { yPercent: 100, opacity: 0, duration: 2}, "<")
+    .from('.img1', { yPercent: 100, opacity: 0, duration: 6})
+    .from('.img2', { yPercent: -100, opacity: 0, duration: 6}, "<")
+    .from('.img3', { yPercent: 100, opacity: 0, duration: 6}, "<")
     // 引导语、长条框、照片出场
     .to('.rectangle', {scale: 0, duration: 1})
     .to('.headline', { scale: 0, duration: 1}, '<')
-    .to('.img1', { yPercent: -100, opacity: 0, duration: 2}, "<")
-    .to('.img2', { yPercent: 100, opacity: 0, duration: 2}, "<")
-    .to('.img3', { yPercent: -100, opacity: 0, duration: 2}, "<")
+    .to('.img1', { yPercent: -100, opacity: 0, duration: 6}, "<")
+    .to('.img2', { yPercent: 100, opacity: 0, duration: 6}, "<")
+    .to('.img3', { yPercent: -100, opacity: 0, duration: 6}, "<")
     // 关键词入场
     .addLabel('keywordEnter')
-    .to('.keyword', { scale: 2, duration: 1, stagger: 0.2})
+    .to('.keyword', { scale: 2, duration: 2, stagger: 0.2})
     // 关键词逐渐变大、模糊，最后消失
-    .to(".keyword", { scale: 7, filter: 'blur(1px)', duration: 1, stagger: 0.2}, "keywordEnter+=1")
-    .to('.keyword', { filter: 'blur(4px)', opacity: 0, duration: 1, stagger: 0.2}, "keywordEnter+=2")
+    .to(".keyword", { scale: 7, filter: 'blur(1px)', duration: 4, stagger: 0.2}, "keywordEnter+=1")
+    .to('.keyword', { filter: 'blur(4px)', opacity: 0, duration: 4, stagger: 0.2}, "keywordEnter+=2")
     // 字体云入场
-    .to('.wordcloud-wrap', {scale: 1, duration: 2}, '-=0.5')
-    .to('.wordcloud-wrap', { xPercent: -100, duration: 2, ease: 'power2.out'})
+    .to('.wordcloud-wrap', {scale: 1, duration: 4}, '-=0.5')
+    .to('.wordcloud-wrap', { xPercent: -100, duration: 4, ease: 'power2.out'})
     // 卡片入场
-    .from('.conclusion-right', {yPercent: 100, opacity: 0, duration: 2}, "<1")
+    .from('.conclusion-right', {yPercent: 100, opacity: 0, duration: 4}, "<1")
 }
 
 </script>
