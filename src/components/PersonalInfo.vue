@@ -13,86 +13,12 @@ let keywordsInfo = ref({
 
 let keywordDomList = undefined
 
-/* 个人信息模块动画入场顺序：
-1、当个人信息模块开始出现在视口30%时，出现引导语 -- Welcome to ...
-2、引导语动画结束后，个人照片滚动入场
-3、当个人照片全部显示完整后，再滚动后，个人照片和引导语消失
-4、随即进度条显示，关键字显示
-5、关键字动画完成后，再一滚动，卡片出现，字体云出现
-
-*/
-
 onMounted(async () => {
-
-  guideAnimate()
-  imgAnimate()
-  running()
-
   createKeywordInfo()
   await nextTick()
-
-  keywordDomList = document.querySelectorAll('.keywords-wrap .keyword')
-  keywordAnimate()
-
-  entranceAnimate()
+  animate()
 })
 
-// 1、引导语入场动画
-const guideAnimate = () => {
-  const t1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.per-info-container',
-      start: 'top 20%',
-      toggleActions: 'restart none none none',
-      pin: true,
-      markers: true,
-      onComplete: imgAnimate
-    }
-  })
-  // 白色条形框弹跳入场
-  t1.to('.rectangle', {
-    scale: 1,
-    duration: 0.3,
-    ease: 'ease: "back.out(1.7)"'
-  })
-  // 引导语由上往下入场
-  t1.from('.headline', {
-    y: '-50%',
-    duration: 0.5,
-    ease: "power2.out",
-    autoAlpha: 0
-  })
-}
-
-// 2、个人照片滚动入场动画
-const imgAnimate = () => {
-  const sections = document.querySelectorAll('.self-img')
-  sections.forEach((item, index) => {
-    gsap.from(item, {
-      y: index % 2 === 0 ? '0vh' : '100vh',
-      autoAlpha: 0,
-      scrollTrigger: {
-        trigger: '.self-img-wrap',
-        start: 'top 20%',
-        pin: '.per-info-container',
-        scrub: 0.3,
-      }
-    })
-  })
-}
-
-
-// 4、进度条显示
-const running = () => {
-  gsap.to('.keywords-wrap .bar', {
-    width: '100%',
-    duration: 11,
-    ease: 'linear',
-    onComplete: () => {
-      document.querySelector('.keywords-wrap').style.display = 'none'
-    }
-  })
-}
 
 // 关键字信息生成
 const createKeywordInfo = () => {
@@ -101,88 +27,79 @@ const createKeywordInfo = () => {
     keyword: item,
     top: ~~(Math.random() * document.querySelector('.keywords-wrap').clientHeight),
     left: ~~(Math.random() * document.querySelector('.keywords-wrap').clientWidth),
-    scale: 0,
-    blur: 0
   }))
 }
 
-// 4、关键字出现动画效果 
-const keywordAnimate = () => {
-  requestAnimationFrame(() => {
-    keywordsInfo.value.info.forEach((item, index) => {
-      setTimeout(() => {
-        item.scale += 0.05
-        if (item.scale > 3) {
-          item.blur += 0.01
-        }
-        if (item.scale > 7) {
-          keywordDomList[item.id].remove()
-        }
-      }, 1 * 500 * index)
-    })
+/* 个人信息模块动画入场顺序：
+1、当个人信息模块开始出现在视口30%时，出现引导语 -- Welcome to ...
+2、引导语动画结束后，个人照片滚动入场
+3、当个人照片全部显示完整后，再滚动后，个人照片和引导语消失
+4、随即进度条显示，关键字显示
+5、关键字动画完成后，再一滚动，卡片出现，字体云出现
 
-    document.querySelectorAll('.keywords-wrap .keyword').length && animate()
-  })
-}
-
-
-// 5、字体云出场方式 先中间出现，再移向左边，然后卡片和段落再由下往上入场
-const entranceAnimate = () => {
-  console.log("entranceAnimate");
-  const t1 = gsap.timeline({
+*/
+const animate = () => {
+  const animation = gsap.timeline({
     scrollTrigger: {
-      trigger: '.conclusion',
+      trigger: '.per-info-container',
       start: 'top top',
+      pin: true,
       scrub: 0.1,
-      pin: '.per-info-container',
-      markers: true
     }
   })
-  t1.to('.wordcloud-wrap', {
-    scale: 1,
-    duration: 2
-  })
-  t1.to('.wordcloud-wrap', {
-    x: '-100%',
-    duration: 2,
-    ease: "power2.out"
-  })
-  t1.from('.conclusion-right', {
-    y: '110%',
-    duration: 3
-  })
+  animation
+    //引导语和长条框入场
+    .from('.rectangle', { scale: 0, duration: 4, ease: 'power2'})
+    .from('.headline', { yPercent: -100, opacity: 0, duration: 4, ease: 'power2.out'}, "<")
+    // 个人照片入场
+    .from('.img1', { yPercent: 100, opacity: 0, duration: 6})
+    .from('.img2', { yPercent: -100, opacity: 0, duration: 6}, "<")
+    .from('.img3', { yPercent: 100, opacity: 0, duration: 6}, "<")
+    // 引导语、长条框、照片出场
+    .to('.rectangle', {scale: 0, duration: 1})
+    .to('.headline', { scale: 0, duration: 1}, '<')
+    .to('.img1', { yPercent: -100, opacity: 0, duration: 6}, "<")
+    .to('.img2', { yPercent: 100, opacity: 0, duration: 6}, "<")
+    .to('.img3', { yPercent: -100, opacity: 0, duration: 6}, "<")
+    // 关键词入场
+    .addLabel('keywordEnter')
+    .to('.keyword', { scale: 2, duration: 2, stagger: 0.2})
+    // 关键词逐渐变大、模糊，最后消失
+    .to(".keyword", { scale: 7, filter: 'blur(1px)', duration: 4, stagger: 0.2}, "keywordEnter+=1")
+    .to('.keyword', { filter: 'blur(4px)', opacity: 0, duration: 4, stagger: 0.2}, "keywordEnter+=2")
+    // 字体云入场
+    .to('.wordcloud-wrap', {scale: 1, duration: 4}, '-=0.5')
+    .to('.wordcloud-wrap', { xPercent: -100, duration: 4, ease: 'power2.out'})
+    // 卡片入场
+    .from('.conclusion-right', {yPercent: 100, opacity: 0, duration: 4}, "<1")
 }
 
 </script>
 
 <template>
   <div class="per-info-container">
-    <div class="guide">
-      <div class="headline-wrap">
-        <div class="headline">Welcome to the personal information module!</div>
-        <div class="rectangle"></div>
+    <!-- 引导语 -->
+    <div class="guide-wrap">
+      <div class="guide">
+        <div class="headline-wrap">
+          <div class="headline">Welcome to the personal information module!</div>
+          <div class="rectangle"></div>
+        </div>
+        <div class="scroll">scroll</div>
       </div>
-      <div class="scroll">scroll</div>
     </div>
-
+    <!-- 个人照片 -->
     <div class="self-img-wrap">
-      <img src="@/assets/images/self_left.jpg" alt="" class="self-img">
-      <img src="@/assets/images/self_center.jpg" alt="" class="self-img">
-      <img src="@/assets/images/self_right.jpg" alt="" class="self-img">
+      <img src="@/assets/images/self_left.jpg" alt="" class="self-img img1">
+      <img src="@/assets/images/self_center.jpg" alt="" class="self-img img2">
+      <img src="@/assets/images/self_right.jpg" alt="" class="self-img img3">
     </div>
+    <!-- 关键词 -->
     <div class="keywords-wrap">
-      <div class="progress-wrap">
-        <div class="progress">程序执行中，请稍候...</div>
-        <div class="bar"></div>
-      </div>
-      <div class="keywords">
-        <span v-for="item in keywordsInfo.info" :key="item.id" class="keyword"
-          :style="{ 'top': `${item.top}px`, 'left': `${item.left}px`, 'transform': `scale(${item.scale})`, 'filter': `blur(${item.blur}px)` }">{{
-            item.keyword
-          }}</span>
-      </div>
+      <span v-for="item in keywordsInfo.info" :key="item.id" class="keyword"
+          :style="{ 'top': `${item.top}px`, 'left': `${item.left}px`}">{{item.keyword}}</span>
     </div>
-
+    <!-- 字体云和卡片 -->
     <div class="conclusion">
       <div class="wordcloud-wrap">
         <img src="@/assets/images/wordcloud.png" alt="字体云">
@@ -210,45 +127,49 @@ const entranceAnimate = () => {
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .per-info-container {
-  position: relative;
   border-top: 1px solid #707070;
   background: url('../assets/images/hacker_bg.webp') no-repeat;
   background-size: cover;
   width: 100%;
   height: 100vh;
 
-  .guide {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
-    height: 60%;
+  .guide-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-    .scroll {
-      width: 90px;
-      height: 90px;
-      border: 2px solid white;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 90px;
-      color: #00d67a;
-      font-size: 24px;
-      margin-top: 200px;
+    .guide {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+      height: 60%;
+
+      .scroll {
+        width: 90px;
+        height: 90px;
+        border: 2px solid white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 90px;
+        color: #00d67a;
+        font-size: 24px;
+        margin-top: 200px;
+      }
     }
   }
+
 
   .headline-wrap {
     .headline {
@@ -262,7 +183,6 @@ const entranceAnimate = () => {
       width: 60vw;
       height: 15px;
       background: white;
-      transform: scaleX(0);
     }
   }
 
@@ -284,53 +204,22 @@ const entranceAnimate = () => {
   .keywords-wrap {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     top: 0;
     left: 0;
-
-    .progress-wrap {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      width: 800px;
-      height: 25px;
-      border-radius: 15px;
-      overflow: hidden;
-      display: none;
-
-      .progress {
-        position: absolute;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        border: 1px solid red;
-        border-radius: 15px;
-        text-align: center;
-      }
-
-      .bar {
-        position: absolute;
-        z-index: 1;
-        width: 0%;
-        height: 100%;
-        border-start-start-radius: 15px;
-        border-end-start-radius: 15px;
-        background: red;
-      }
-    }
 
     .keyword {
       position: absolute;
       color: #00d67a;
-      transform: scale(0);
       width: 100px;
+      transform: scale(0);
     }
   }
 
   .conclusion {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 
