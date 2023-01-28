@@ -66,24 +66,24 @@ let commandStart = ['Performing DNS Lookups for',
   'Compilation Started of ',
   'Downloading ']
 let commandParts = ['Data Structure',
-    'https://gwennie-zhou.github.io',
-    'Texture',
-    'TPS Reports',
-    ' .... Searching ... ',
-    'https://medium.com/@gwennie.io',
-    'https://github.com/Gwennie-zhou?tab=repositories']
+  'https://gwennie-zhou.github.io',
+  'Texture',
+  'TPS Reports',
+  ' .... Searching ... ',
+  'https://medium.com/@gwennie.io',
+  'https://github.com/Gwennie-zhou?tab=repositories']
 let commandResponses = ['Authorizing ',
-    'Authorized...',
-    'Access Granted..',
-    'Going Deeper....',
-    'Compression Complete.',
-    'Compilation of Data Structures Complete..',
-    'Entering Security Console...',
-    'Encryption Unsuccesful Attempting Retry...',
-    'Waiting for response...',
-    '....Searching...',
-    'Calculating Space Requirements '
-  ]
+  'Authorized...',
+  'Access Granted..',
+  'Going Deeper....',
+  'Compression Complete.',
+  'Compilation of Data Structures Complete..',
+  'Entering Security Console...',
+  'Encryption Unsuccesful Attempting Retry...',
+  'Waiting for response...',
+  '....Searching...',
+  'Calculating Space Requirements '
+]
 
 let isProcessing = false // 判断程序是否进行中以用来区别不同语句标签元素的生成
 let processTime = 0 // 程序正在执行的时间，在这个时间内，创建的都是span标签
@@ -115,16 +115,35 @@ onMounted(() => {
   scrollWidth = document.querySelector('.projects-wrap').scrollWidth
   scrollX = scrollWidth - window.innerWidth;
 
-  triggerHrScroll()
-  triggerConsoleOutput()
+  animate()
+  // triggerHrScroll()
+  // triggerConsoleOutput()
 })
 
 // 当滚动到可视区时才出现打印输出效果
 const triggerConsoleOutput = () => {
   ScrollTrigger.create({
     trigger: '.open-source-pro-container',
-    onToggle: self => self.isActive ? consoleOutput() : removeTimer() // 当前元素滚动到可视窗口的时候触发，否则就将定时器移除
+    start: 'top top',
+    end: `+=${scrollWidth}`,
+    
   })
+}
+
+const animate = () => {
+  const animation = gsap.timeline({
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.open-source-pro-container', //触发滚动的元素
+      start: 'top top', // 当触发器的顶部碰到视口的顶部时
+      end: `+=${scrollWidth}`, // 滚动条结束的位置
+      pin: true, // 在执行滚动动画时固定触发器元素
+      scrub: 1, // 触发器与滚动条绑定
+      markers: true, // 开发时的便于查看的标记
+      onToggle: self => self.isActive ? consoleOutput() : removeTimer() // 当前元素滚动到可视窗口的时候触发，否则就将定时器移除
+    }
+  })
+  animation.to('.projects-wrap', { x: -scrollX })
 }
 
 
@@ -144,11 +163,11 @@ const consoleOutput = () => {
   let textEl = document.createElement('p')
   if (!isProcessing) {
     const commandType = ~~(Math.random() * 4) // 当次数没有足够多时，首位数字随机出现的概率可能会更小点
-    switch(commandType) {
+    switch (commandType) {
       case 0: // 命令输入
-        textEl.textContent = commandStart[~~( Math.random() * commandStart.length)] + commandParts[~~(Math.random() * commandParts.length)]
+        textEl.textContent = commandStart[~~(Math.random() * commandStart.length)] + commandParts[~~(Math.random() * commandParts.length)]
         break;
-      case 3: 
+      case 3:
         isProcessing = true
         processTime = ~~(Math.random() * 5000) // 每次程序执行的时间不等
         lastProcess = Date.now()
@@ -170,13 +189,13 @@ const consoleOutput = () => {
   const wrapperDomScrollHeight = outputWrapperDom.scrollHeight;
   if (wrapperDomScrollHeight > wrapperDomHeight * 1.5) { //设置阈值为1.5一屏半
     const removeNodes = outputConsoleDom.querySelectorAll('*')
-    for(let n = 0; n < ~~(removeNodes.length/3); n++) {
+    for (let n = 0; n < ~~(removeNodes.length / 3); n++) {
       outputConsoleDom.removeChild(removeNodes[n])
     }
   }
 
   timerID = setTimeout(consoleOutput, ~~(Math.random() * 200))
-} 
+}
 
 const removeTimer = () => {
   clearTimeout(timerID)
@@ -186,44 +205,52 @@ const removeTimer = () => {
 
 <template>
   <div class="open-source-pro-container">
-    <div class="projects-wrap">
-      <div class="introduction panel">
-        <div class="title">Are you ready? </div>
-        <p>My personal project exhibition </p>
-        <p>starts here<span class="underline">_</span></p>
-        <div class="scroll">scroll</div>
-      </div>
-      <div class="project panel" v-for="(item, index) in projects" :key="index">
-        <div class="name">{{ item.name }}</div>
-        <div class="desc">{{ item.desc }}</div>
-        <div class="tech-stack">技术栈：{{ item.techStack }}</div>
-        <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+    <div class="open-source-pro-box">
+      <div class="projects-wrap">
+        <div class="introduction panel">
+          <div class="title">Are you ready? </div>
+          <p>My personal project exhibition </p>
+          <p>starts here<span class="underline">_</span></p>
+          <div class="scroll">scroll</div>
         </div>
-        <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
-        <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
+        <div class="project panel" v-for="(item, index) in projects" :key="index">
+          <div class="name">{{ item.name }}</div>
+          <div class="desc">{{ item.desc }}</div>
+          <div class="tech-stack">技术栈：{{ item.techStack }}</div>
+          <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+          </div>
+          <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
+          <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
+        </div>
       </div>
-    </div>
-    <div class="output-wrapper">
-      <div class="output-console"></div>
+      <div class="output-wrapper">
+        <div class="output-console"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .open-source-pro-container {
-  position: relative;
   width: 6000px;
   height: 100vh;
+}
+.open-source-pro-box {
+  position: relative;
   overflow-y: hidden;
+  width: 100%;
+  height: 100%;
 
   .projects-wrap {
     width: auto;
     height: 100%;
     padding: 15vh 20vh 0 80vh;
     display: flex;
+
     .panel {
       margin-right: 300px;
     }
+
     .introduction {
       display: flex;
       flex-direction: column;
@@ -233,14 +260,17 @@ const removeTimer = () => {
       height: 600px;
       border: 4px solid white;
       font-size: 30px;
+
       .title {
         font-size: 55px;
         padding-bottom: 20px;
       }
+
       .underline {
         visibility: visible;
         animation: twinkle 1s infinite ease;
       }
+
       .scroll {
         width: 80px;
         height: 80px;
@@ -291,6 +321,7 @@ const removeTimer = () => {
     color: #00ff91;
     overflow-y: hidden;
   }
+
   .output-console {
     width: 66.666vw;
     height: auto;
@@ -303,9 +334,11 @@ const removeTimer = () => {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }

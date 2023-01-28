@@ -33,7 +33,6 @@ const animate = () => {
       trigger: '.blog-container',
       start: 'top 20%',
       toggleActions: 'restart none none none',
-      markers: true
     }
   })
   animation
