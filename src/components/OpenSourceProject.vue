@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, nextTick } from 'vue';
 
 // 动画库
 import { gsap } from "gsap";
@@ -83,14 +83,14 @@ let commandResponses = ['Authorizing ',
   'Waiting for response...',
   '....Searching...',
   'Calculating Space Requirements '
-]
+];
 
-let isProcessing = false // 判断程序是否进行中以用来区别不同语句标签元素的生成
-let processTime = 0 // 程序正在执行的时间，在这个时间内，创建的都是span标签
-let lastProcess = 0 // 上一次p标签创建完（即命令行语句生成后）的时间戳
+let isProcessing = false; // 判断程序是否进行中以用来区别不同语句标签元素的生成
+let processTime = 0; // 程序正在执行的时间，在这个时间内，创建的都是span标签
+let lastProcess = 0; // 上一次p标签创建完（即命令行语句生成后）的时间戳
 let timerID = undefined;
-let scrollWidth = 0 // 可滚动的宽度
-let scrollX = 0 // 水平滚动的距离
+let scrollWidth = 0; // 可滚动的宽度
+let scrollX = 0; // 水平滚动的距离
 
 // 横向滚动
 const triggerHrScroll = () => {
@@ -115,11 +115,12 @@ onMounted(() => {
   scrollWidth = document.querySelector('.projects-wrap').scrollWidth
   scrollX = scrollWidth - window.innerWidth;
 
-  animate()
+  nextTick(() => {
+    animate();
+  })
   // triggerHrScroll()
   // triggerConsoleOutput()
 })
-
 // 当滚动到可视区时才出现打印输出效果
 const triggerConsoleOutput = () => {
   ScrollTrigger.create({
@@ -234,12 +235,12 @@ const removeTimer = () => {
 .open-source-pro-container {
   width: 6000px;
   height: 100vh;
+  overflow: hidden;
 }
 .open-source-pro-box {
   position: relative;
   overflow-y: hidden;
   width: 100%;
-  height: 100%;
 
   .projects-wrap {
     width: auto;
@@ -326,8 +327,6 @@ const removeTimer = () => {
     width: 66.666vw;
     height: auto;
   }
-
-
 }
 
 @keyframes twinkle {
