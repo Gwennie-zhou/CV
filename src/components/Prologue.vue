@@ -46,7 +46,6 @@ onMounted(() => {
     </div>
     <div class="down">
       <img src="@/assets/images/arrow_down.png" alt="" class="arrow-down">
-      <span>Welcome to personal information!</span>
     </div>
   </div>
 </template>

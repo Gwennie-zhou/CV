@@ -1,5 +1,4 @@
 <script setup>
-import * as echarts from 'echarts';
 import { onMounted, reactive } from 'vue';
 
 // 动画库

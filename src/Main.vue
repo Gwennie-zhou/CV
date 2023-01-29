@@ -2,11 +2,10 @@
 import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
-import WorkExperience from "./components/WorkExperience.vue";
-import ProjectExperience from "./components/ProjectExperience.vue";
+import Experience from "./components/Experience.vue";
 import OpenSourceProject from "./components/OpenSourceProject.vue";
 import Blog from './components/Blog.vue'
-import SelfEvaluation from "./components/SelfEvaluation.vue";
+// import SelfEvaluation from "./components/SelfEvaluation.vue";
 
 import { onMounted, ref, reactive } from 'vue';
 
@@ -20,27 +19,27 @@ const tags = reactive([
   {
     tag: '个人信息',
     className: 'per-info-container'
-  }, 
+  },
   {
     tag: '专业技能',
     className: 'skill-container'
-  }, 
+  },
   {
     tag: '工作经历',
     className: 'work-container'
-  }, 
+  },
   {
     tag: '项目经验',
     className: 'project-container'
-  }, 
+  },
   {
     tag: '个人项目',
     className: 'open-source-pro-container'
-  }, 
+  },
   {
     tag: '博客文章',
     className: 'blog-container'
-  }, 
+  },
   {
     tag: '个人评价',
     className: 'evaluation-container'
@@ -55,13 +54,6 @@ onMounted(() => {
 
 function jump(className) {
   document.querySelector(`.${className}`).scrollIntoView()
-}
-
-function move(e) {
-  gsap.to('.cursor', 1, {
-    top: e.clientY,
-    left: e.clientX
-  })
 }
 
 function contactMe() {
@@ -105,22 +97,17 @@ const hiddenFloat = () => {
 
     <Prologue />
 
-    <div class="cursor-wrap" @mousemove="move">
-      <PersonalInfo class="hidden-float"/>
-      <div class="hr"></div>
-      <Skill />
-      <div class="hr"></div>
-      <WorkExperience />
-      <div class="hr"></div>
-      <ProjectExperience />
-      <div class="hr"></div>
-      <div class="cursor"></div>
-    </div>
+    <PersonalInfo class="hidden-float" />
+    <div class="hr"></div>
+    <Skill />
+    <div class="hr"></div>
+    <Experience />
+    <div class="hr"></div>
 
     <Blog />
     <OpenSourceProject class="hidden-float" />
-    
-    <SelfEvaluation />
+
+    <!-- <SelfEvaluation /> -->
 
     <!-- 弹窗按钮 -->
     <div class="floating-btn" @click="contactMe">
@@ -146,6 +133,7 @@ const hiddenFloat = () => {
 <style lang="less" scoped>
 .main-container {
   width: 100%;
+
   .header {
     width: 100%;
     height: 90px;
@@ -194,32 +182,14 @@ const hiddenFloat = () => {
       }
     }
   }
-  .cursor-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-  .cursor {
-    z-index: -1;
-    position: absolute;
-    top: 20%;
-    left: 85%;
-    width: 800px;
-    height: 1300px;
-    margin: 0 0 0.1px;
-    object-fit: contain;
-    border-radius: 100%;
-    filter: blur(200px);
-    background-image: radial-gradient(circle at 50% 50%, #00ff91, rgba(0, 214, 122, 0));
-    will-change: left, top;
-    transition: all 0.5s;
-  }
+
   .floating-btn {
     z-index: 100;
     position: fixed;
     bottom: 27px;
     right: 50px;
     cursor: pointer;
+
     .contact {
       position: absolute;
       top: 30%;
@@ -231,13 +201,18 @@ const hiddenFloat = () => {
     }
   }
 }
+
 @keyframes blink {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   30% {
     opacity: 0.5;
   }
+
   60% {
     opacity: 0;
   }
@@ -252,26 +227,30 @@ const hiddenFloat = () => {
   z-index: 199;
   width: 100%;
   height: 100%;
-  background-color: hsla(0,0%,7%,.65);
+  background-color: hsla(0, 0%, 7%, .65);
 }
+
 .popup {
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 200;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 560px;
   height: 420px;
+
   .way {
     position: absolute;
     top: 30%;
     left: 20%;
     color: black;
     font-size: 22px;
+
     .wechat {
       padding-bottom: 5px;
     }
   }
+
   .close {
     position: absolute;
     top: 0;

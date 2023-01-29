@@ -92,22 +92,6 @@ let timerID = undefined;
 let scrollWidth = 0; // 可滚动的宽度
 let scrollX = 0; // 水平滚动的距离
 
-// 横向滚动
-const triggerHrScroll = () => {
-  gsap.to('.projects-wrap', {
-    x: -scrollX,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.open-source-pro-container', //触发滚动的元素
-      start: 'top top', // 当触发器的顶部碰到视口的顶部时
-      end: `+=${scrollWidth}`, // 滚动条结束的位置
-      pin: true, // 在执行滚动动画时固定触发器元素
-      scrub: 1, // 触发器与滚动条绑定
-      markers: true // 开发时的便于查看的标记
-    }
-  })
-}
-
 onMounted(() => {
   outputConsoleDom = document.querySelector('.output-console')
   outputWrapperDom = document.querySelector('.output-wrapper')
@@ -118,18 +102,7 @@ onMounted(() => {
   nextTick(() => {
     animate();
   })
-  // triggerHrScroll()
-  // triggerConsoleOutput()
 })
-// 当滚动到可视区时才出现打印输出效果
-const triggerConsoleOutput = () => {
-  ScrollTrigger.create({
-    trigger: '.open-source-pro-container',
-    start: 'top top',
-    end: `+=${scrollWidth}`,
-    
-  })
-}
 
 const animate = () => {
   const animation = gsap.timeline({
