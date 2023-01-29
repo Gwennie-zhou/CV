@@ -51,6 +51,7 @@ const animate = () => {
     //引导语和长条框入场
     .from('.rectangle', { scale: 0, duration: 4, ease: 'power2'})
     .from('.headline', { yPercent: -100, opacity: 0, duration: 4, ease: 'power2.out'}, "<")
+    .from('.guide-wrap .scroll', {opacity: 0 , duration: 2}, "-=2")
     // 个人照片入场
     .from('.img1', { yPercent: 100, opacity: 0, duration: 6})
     .from('.img2', { yPercent: -100, opacity: 0, duration: 6}, "<")
@@ -70,6 +71,7 @@ const animate = () => {
     // 字体云入场
     .to('.wordcloud-wrap', {scale: 1, duration: 4}, '-=0.5')
     .to('.wordcloud-wrap', { xPercent: -100, duration: 4, ease: 'power2.out'})
+    .to('.guide-wrap .scroll', {opacity: 0})
     // 卡片入场
     .from('.conclusion-right', {yPercent: 100, opacity: 0, duration: 4}, "<1")
 }
@@ -146,7 +148,7 @@ const animate = () => {
 
     .guide {
       position: absolute;
-      top: 60%;
+      top: 65%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 2;
@@ -157,15 +159,15 @@ const animate = () => {
       height: 60%;
 
       .scroll {
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        height: 80px;
         border: 2px solid white;
         border-radius: 50%;
         text-align: center;
-        line-height: 90px;
+        line-height: 80px;
         color: #00d67a;
         font-size: 24px;
-        margin-top: 200px;
+        margin-top: 250px;
       }
     }
   }
