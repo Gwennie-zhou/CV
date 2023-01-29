@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, nextTick } from 'vue';
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
@@ -31,7 +31,7 @@ const animate = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: '.blog-container',
-      start: 'top 20%',
+      start: 'top 80%',
       toggleActions: 'restart none none none',
     }
   })
@@ -39,7 +39,8 @@ const animate = () => {
     .from(".blog-container .left", { xPercent: -100, opacity: 0, duration: 1 })
     .from(".blog-container .right", { yPercent: 100, opacity: 0, duration: 1 })
 }
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
   animate()
 })
 

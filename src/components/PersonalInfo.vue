@@ -43,6 +43,7 @@ const animate = () => {
     scrollTrigger: {
       trigger: '.per-info-container',
       start: 'top top',
+      end: '+=5000',
       pin: true,
       scrub: 0.1,
     }

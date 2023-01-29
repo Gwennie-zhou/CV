@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { nextTick, onMounted, reactive } from 'vue';
 import * as echarts from 'echarts';
 
 // 动画库
@@ -140,15 +140,17 @@ const animate = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: '.skill-container',
-      start: 'top top',
-      toggleActions: 'restart none none none'
+      start: 'top 50%',
+      toggleActions: 'restart none none reset',
+      // markers: true
     }
   })
   animation
     .to('.skill-container .left', { xPercent: 100, opacity: 1, duration: 1})
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
   makeCharts()
   animate()
 })

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { nextTick, onMounted } from 'vue';
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
@@ -9,8 +9,8 @@ const animate = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: '.experience-container',
-      start: 'top top',
-      toggleActions: 'restart none none none',
+      start: 'top 80%',
+      toggleActions: 'restart none none reset',
       // markers: true
     }
   })
@@ -20,7 +20,8 @@ const animate = () => {
     .to('.project-container .left', {xPercent: 100, opacity: 1, duration: 1}, "<")
 }
 
-onMounted(()=> {
+onMounted(async ()=> {
+  await nextTick()
   animate()
 })
 </script>
