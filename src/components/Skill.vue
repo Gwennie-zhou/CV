@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, reactive } from 'vue';
+import * as echarts from 'echarts';
 
 // 动画库
 import { gsap } from "gsap";
@@ -16,23 +17,139 @@ const skills = reactive([
   '熟悉运用 Vant、Element UI 等前端框架',
   '熟悉使用less、sass 预处理器',
   '熟悉使用eCharts开发图表',
-  '具有优秀的英语读写能力（英语六级），在 medium（需翻墙）上面写技术博客'
+  '具有优秀的英语读写能力（英语六级），在 medium上经营技术博客账号',
+  '博客地址（需VPN）：-https://medium.com/@gwennie.io'
 ])
+
+const piesTop = reactive(['vue', 'react', 'js'])
+const piesBottom = reactive(['css', 'webpack'])
+
+
+function makeCharts() {
+  const vuePie = echarts.init(document.getElementById('vue_pie'));
+  const reactPie = echarts.init(document.getElementById('react_pie'));
+  const jsPie = echarts.init(document.getElementById('js_pie'));
+  const cssPie = echarts.init(document.getElementById('css_pie'));
+  const webpackPie = echarts.init(document.getElementById('webpack_pie'));
+
+
+  const commonOption = {
+    type: 'pie',
+    radius: ['50%', '70%'],
+    label: {
+      show: false,
+      position: 'center'
+    },
+    labelLine: {
+      show: false
+    },
+    color: [
+      '#00d67a',
+      'gray'
+    ],
+  }
+
+  vuePie.setOption({
+    title: {
+      text: '90%',
+      left: 'center',
+      top: 'center'
+    },
+    series: [
+      {
+        ...commonOption,
+        data: [
+          { value: 90, name: 'vue' },
+          { value: 10, name: 'other' }
+        ]
+      }
+    ]
+  })
+
+  reactPie.setOption({
+    title: {
+      text: '50%',
+      left: 'center',
+      top: 'center'
+    },
+    series: [
+      {
+        ...commonOption,
+        data: [
+          { value: 50, name: 'react' },
+          { value: 50, name: 'other' }
+        ]
+      }
+    ]
+  })
+
+  jsPie.setOption({
+    title: {
+      text: '90%',
+      left: 'center',
+      top: 'center'
+    },
+    series: [
+      {
+        ...commonOption,
+        data: [
+          { value: 90, name: 'js' },
+          { value: 10, name: 'other' }
+        ]
+      }
+    ]
+  })
+
+  cssPie.setOption({
+    title: {
+      text: '90%',
+      left: 'center',
+      top: 'center'
+    },
+    series: [
+      {
+        ...commonOption,
+        data: [
+          { value: 90, name: 'css' },
+          { value: 10, name: 'other' }
+        ]
+      }
+    ]
+  })
+
+  webpackPie.setOption({
+    title: {
+      text: '65%',
+      left: 'center',
+      top: 'center'
+    },
+    series: [
+      {
+        ...commonOption,
+        data: [
+          { value: 65, name: 'webpack' },
+          { value: 35, name: 'other' }
+        ]
+      }
+    ]
+  })
+
+}
 
 const animate = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: '.skill-container',
       start: 'top top',
-      toggleActions: 'restart none restart none'
+      toggleActions: 'restart none none none'
     }
   })
   animation
-    .to('.skill-container-box', { backgroundImage: 'linear-gradient(370deg, #00ff91 20%, black 20%)', duration: 1.5, ease: 'power4.out'})
-    .from('.skill-container .text', { opacity: 0, duration: 0.5})
-    .from('.skills ol li', {xPercent: 50, opacity: 0, duration: 0.5, stagger: 0.2}, "<")
+    .to('.skill-container .left', { xPercent: 100, opacity: 1, duration: 1})
 }
+
 onMounted(() => {
+  makeCharts()
   animate()
 })
 
@@ -40,37 +157,60 @@ onMounted(() => {
 
 <template>
   <div class="skill-container">
-    <div class="skill-container-box">
-      <div class="skills">
-        <ol>
-          <li v-for="(item, i) in skills" :key="i">
+    <div class="left">
+      <ol>
+        <li v-for="(item, i) in skills" :key="i">
+          <div v-if="i !== skills.length -1">
             <span class="check">✔</span>
             <span>{{ item }}</span>
-          </li>
-        </ol>
-      </div>
-      <div class="text">SKILL</div>
+          </div>
+          <div v-else>
+            <span style="padding-left: 20px">{{ item.split('-')[0] }}</span><a href="https://medium.com/@gwennie.io" target="_blank" class="theme-color">{{ item.split('-')[1] }}</a>
+          </div>
+        </li>
+      </ol>
     </div>
-
+    <div class="vl"></div>
+    <div class="right">
+      <div class="title">
+        <div>&lt;skill</div>
+        <div>/&gt;</div>
+      </div>
+      <div class="charts">
+        <div class="top">
+          <div class="chart-wrap" v-for="(item, i) in piesTop" :key="i">
+            <div :id="item + '_pie'" class="pie"></div>
+            <div>{{ item }}</div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="chart-wrap" v-for="(item, i) in piesBottom" :key="i">
+            <div :id="item + '_pie'" class="pie"></div>
+            <div>{{ item }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .skill-container {
+  display: flex;
+  background: white;
+  color: black;
   width: 100%;
-  height: 100vh;
-  .skill-container-box {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
+  height: 50vh;
 
-  .skills {
-    font-size: 25px;
-    margin-left: 150px;
-    padding-top: 100px;
+  .left {
+    flex: 1;
+    padding: 50px 30px;
+    font-size: 20px;
+    transform: translateX(-100%);
+    opacity: 0;
+
     ol li {
-      padding-bottom: 10px;
+      padding-bottom: 5px;
     }
 
     .check {
@@ -79,13 +219,45 @@ onMounted(() => {
     }
   }
 
-  .text {
-    position: absolute;
-    left: 50px;
-    bottom: 50px;
-    letter-spacing: 0.18em;
-    font-size: 60px;
+  .right {
+    width: 40%;
+    height: 100%;
+    padding: 20px 30px;
+  }
+  .title {
+    justify-content: space-around !important;
   }
 
+  .charts {
+    width: 80%;
+    height: 80%;
+    background: white;
+    color: black;
+    border-radius: 10px;
+
+    .chart-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+
+    .pie {
+      width: 120px;
+      height: 120px;
+    }
+
+    .top,
+    .bottom {
+      display: flex;
+      justify-content: center;
+    }
+
+    .top {
+      margin-bottom: 20px;
+    }
+  }
 }
 </style>
