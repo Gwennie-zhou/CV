@@ -15,7 +15,6 @@ const animate = () => {
     }
   })
   animation
-    .from('.work-container .vl', {y: -500,opacity: 0,duration: 0.3})
     .from('.project-container .line', {yPercent: 100, duration: 0.3}, "<")
     .to('.work-container .right', {xPercent: -100, opacity: 1, duration: 1})
     .to('.project-container .left', {xPercent: 100, opacity: 1, duration: 1}, "<")
@@ -38,7 +37,6 @@ onMounted(()=> {
           <img src="@/assets/images/work.gif" alt="" />
         </div>
       </div>
-      <div class="vl"></div>
       <div class="right">
         <div class="work-wrap">
           <div class="timeline">
@@ -51,10 +49,10 @@ onMounted(()=> {
             <div class="first">
               <div class="time">2021.07-2022.07</div>
               <div class="company">
-                <div class="name">深圳小鹅网络技术有限公司</div>
+                <div class="name">深圳小鹅网络技术有限公司（小鹅通）</div>
                 <div class="desc">
                   <span>公司简介：</span>
-                  俗称“小鹅通”，是一家以线上知识教育为核心的 Saas 平台的独角兽公司
+                  一家以线上知识教育为核心的 Saas 平台的独角兽公司
                 </div>
                 <div class="task">
                   <div>工作内容：</div>
@@ -172,7 +170,7 @@ onMounted(()=> {
 .work-container {
   display: flex;
   width: 100%;
-  height: 50vh;
+  height: auto;
 
   .left {
     width: 30%;
@@ -263,11 +261,6 @@ onMounted(()=> {
   }
 }
 
-.separate {
-  width: 100vw;
-  height: 1px;
-  background: black;
-}
 
 .project-container {
   display: flex;

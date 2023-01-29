@@ -53,7 +53,7 @@ onMounted(() => {
 <style lang="less" scoped>
 
 .center {
-  margin-top: 60px;
+  margin-top: 45px;
   margin-left: 50px;
   font-size: 30px;
   height: 73vh;
@@ -65,8 +65,7 @@ onMounted(() => {
   }
   .text {
     visibility: hidden;
-    font-size: 60px;
-    padding: 4px;
+    font-size: 54px;
     margin-bottom: 20px;
     width: 0;
     white-space: nowrap;

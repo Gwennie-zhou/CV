@@ -44,3 +44,8 @@ body::-webkit-scrollbar-thumb{
 .hidden {
   display: none;
 }
+.separate {
+  width: 100vw;
+  height: 1px;
+  background: black;
+}

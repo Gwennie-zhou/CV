@@ -124,7 +124,10 @@ const animate = () => {
               <li>学历：本科（全日制）</li>
               <li>就读于：韩山师范学院</li>
               <li>入学年份：2017-2021</li>
-              <li>专业：信息管理与信息系统</li>
+              <li>
+                <div>专业：信息管理与信息系统</div>
+                <div style="padding: 5px 0 0 50px">(计算机系)</div>
+              </li>
             </ul>
           </div>
         </div>

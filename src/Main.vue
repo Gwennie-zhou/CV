@@ -56,7 +56,7 @@ const hiddenFloat = () => {
     <PersonalInfo class="hidden-float" />
     <div class="hr"></div>
     <Skill />
-    <div class="hr"></div>
+    <div class="separate"></div>
     <Experience />
     <div class="hr"></div>
 
@@ -100,9 +100,10 @@ const hiddenFloat = () => {
     .contact {
       position: absolute;
       top: 30%;
-      left: 27%;
-      transform: skew(-15deg, 2deg);
+      left: 22%;
+      transform: skew(344deg, 3deg);
       z-index: 10;
+      font-size: 20px;
       color: #00ff91;
       animation: blink 1s linear infinite;
     }

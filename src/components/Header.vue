@@ -57,7 +57,7 @@ function jump(className) {
   position: relative; //设置定位才可以提高层级以便不至于被个人信息中的图片影响
   z-index: 10;
   width: 100%;
-  height: 90px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,11 +90,10 @@ function jump(className) {
 
   .tag {
     display: flex;
-    font-size: 20px;
+    font-size: 18px;
 
     li {
       padding: 0 15px;
-      border-right: 1px solid white;
       cursor: pointer;
 
       &:last-child {
