@@ -245,6 +245,7 @@ const removeTimer = () => {
       height: 600px;
       border: 4px solid white;
       font-size: 30px;
+      backdrop-filter: blur(10px); //背景模糊，制作毛玻璃效果
 
       .title {
         font-size: 55px;
