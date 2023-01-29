@@ -24,14 +24,14 @@ const animate = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: '.skill-container',
-      start: 'top 20%',
-      toggleActions: 'restart none none none'
+      start: 'top top',
+      toggleActions: 'restart none restart none'
     }
   })
   animation
     .to('.skill-container-box', { backgroundImage: 'linear-gradient(370deg, #00ff91 20%, black 20%)', duration: 1.5, ease: 'power4.out'})
     .from('.skill-container .text', { opacity: 0, duration: 0.5})
-    .from('.skills ol li', {xPercent: 50, opacity: 0, duration: 0.5, stagger: 0.2})
+    .from('.skills ol li', {xPercent: 50, opacity: 0, duration: 0.5, stagger: 0.2}, "<")
 }
 onMounted(() => {
   animate()

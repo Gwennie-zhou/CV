@@ -7,17 +7,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const animate = () => {
   const animation = gsap.timeline({
-    scrollTrigger: '.experience-container',
-    start: 'top top',
-    toggleActions: 'restart none reverse none'
-    
+    scrollTrigger: {
+      trigger: '.experience-container',
+      start: 'top top',
+      toggleActions: 'restart none none none',
+      markers: true
+    }
   })
   animation
-    .from('.experience-container', {background: 'black', duration: 0.8})
     .from('.work-container .vl', {y: -500,opacity: 0,duration: 0.3})
     .from('.project-container .line', {yPercent: 100, duration: 0.3}, "<")
-    .from('.work-container .right', {xPercent: 100, opacity: 0, duration: 1})
-    .from('.project-container .left', {xPercent: -100, opacity: 0, duration: 1}, "<")
+    .to('.work-container .right', {xPercent: -100, opacity: 1, duration: 1})
+    .to('.project-container .left', {xPercent: 100, opacity: 1, duration: 1}, "<")
 }
 
 onMounted(()=> {
@@ -193,6 +194,8 @@ onMounted(()=> {
   .right {
     flex: 1;
     padding: 25px;
+    opacity: 0;
+    transform: translateX(100%);
 
     .work-wrap {
       display: flex;
@@ -277,6 +280,8 @@ onMounted(()=> {
     overflow: auto;
     font-size: 16px;
     line-height: 24px;
+    transform: translateX(-100%);
+    opacity: 0;
 
     .first {
       margin-bottom: 30px;

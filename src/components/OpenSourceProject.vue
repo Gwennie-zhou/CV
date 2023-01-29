@@ -241,6 +241,7 @@ const removeTimer = () => {
   position: relative;
   overflow-y: hidden;
   width: 100%;
+  height: 100%;
 
   .projects-wrap {
     width: auto;
