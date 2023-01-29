@@ -73,8 +73,8 @@ const hiddenFloat = () => {
 
     <!-- 弹窗  -->
     <Teleport to="body">
-      <div v-if="isOpen" class="modal"></div>
-      <div v-if="isOpen" class="popup">
+      <div v-show="isOpen" class="modal"></div>
+      <div v-show="isOpen" class="popup">
         <img src="@/assets/images/envelope.png" alt="">
         <div class="way">
           <div class="wechat">微信ID：RH_MissZhou</div>
