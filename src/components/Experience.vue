@@ -11,7 +11,7 @@ const animate = () => {
       trigger: '.experience-container',
       start: 'top top',
       toggleActions: 'restart none none none',
-      markers: true
+      // markers: true
     }
   })
   animation

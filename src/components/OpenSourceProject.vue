@@ -113,7 +113,7 @@ const animate = () => {
       end: `+=${scrollWidth}`, // 滚动条结束的位置
       pin: true, // 在执行滚动动画时固定触发器元素
       scrub: 1, // 触发器与滚动条绑定
-      markers: true, // 开发时的便于查看的标记
+      // markers: true, // 开发时的便于查看的标记
       onToggle: self => self.isActive ? consoleOutput() : removeTimer() // 当前元素滚动到可视窗口的时候触发，否则就将定时器移除
     }
   })
