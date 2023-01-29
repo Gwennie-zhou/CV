@@ -16,7 +16,8 @@ const projects = reactive([
     CnTitle: '',
     CnDocLink: '',
     EnTitle: '',
-    EnDocLink: ''
+    EnDocLink: '',
+    imgName: 'lucky.png'
   },
   {
     name: 'CDNLoader',
@@ -26,7 +27,8 @@ const projects = reactive([
     CnTitle: '微组件加载器原理与代码实现',
     CnDocLink: 'https://medium.com/@gwennie.io/%E5%BE%AE%E7%BB%84%E4%BB%B6%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-c4cee176e0e8',
     EnTitle: 'CDNLoader Principle and Code Implementation',
-    EnDocLink: 'https://medium.com/@gwennie.io/cdnloader-principle-and-code-implementation-b792318f59d4'
+    EnDocLink: 'https://medium.com/@gwennie.io/cdnloader-principle-and-code-implementation-b792318f59d4',
+    imgName: 'CDNLoader.webp'
   },
   {
     name: 'CV',
@@ -36,7 +38,8 @@ const projects = reactive([
     CnTitle: '',
     CnDocLink: '',
     EnTitle: '',
-    EnDocLink: ''
+    EnDocLink: '',
+    imgName: 'CV.png'
   },
   {
     name: 'BingDwenDwen',
@@ -46,7 +49,8 @@ const projects = reactive([
     CnTitle: '',
     CnDocLink: '',
     EnTitle: 'Send you a BingDwenDwen Drawn with CSS',
-    EnDocLink: 'https://medium.com/@gwennie.io/send-you-a-bingdwendwen-drawn-with-css-acc063dc7558'
+    EnDocLink: 'https://medium.com/@gwennie.io/send-you-a-bingdwendwen-drawn-with-css-acc063dc7558',
+    imgName: 'BingDwenDwen.png'
   }
 ])
 
@@ -188,13 +192,18 @@ const removeTimer = () => {
           <div class="scroll">scroll</div>
         </div>
         <div class="project panel" v-for="(item, index) in projects" :key="index">
-          <div class="name">{{ item.name }}</div>
-          <div class="desc">{{ item.desc }}</div>
-          <div class="tech-stack">技术栈：{{ item.techStack }}</div>
-          <div v-if="item.githubLink">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+          <div class="detail">
+            <div class="name">{{ item.name }}</div>
+            <div class="desc">{{ item.desc }}</div>
+            <div class="tech-stack">技术栈：{{ item.techStack }}</div>
+            <div v-if="item.githubLink" class="link">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+            </div>
+            <div v-if="item.CnDocLink" class="link">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
+            <div v-if="item.EnDocLink" class="link">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
           </div>
-          <div v-if="item.CnDocLink">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
-          <div v-if="item.EnDocLink">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
+          <div class="project-img-wrap">
+            <img v-if="item.imgName" :src="require('@/assets/images/'+ item.imgName)" alt="" class="project-img"/>
+          </div>
         </div>
       </div>
       <div class="output-wrapper">
@@ -210,6 +219,7 @@ const removeTimer = () => {
   height: 100vh;
   overflow: hidden;
 }
+
 .open-source-pro-box {
   position: relative;
   overflow-y: hidden;
@@ -259,9 +269,7 @@ const removeTimer = () => {
     }
 
     .project {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
+      position: relative;
       width: 700px;
       height: 600px;
       background: white;
@@ -269,18 +277,34 @@ const removeTimer = () => {
       box-shadow: 0 0 10px 3px #00ff91;
       color: black;
       font-size: 18px;
-      padding: 20px;
+      padding: 140px 20px 20px;
 
       .name {
-        font-size: 24px;
+        font-size: 35px;
+        padding-bottom: 50px;
       }
 
       .desc {
         color: #787878;
+        padding-bottom: 50px;
       }
 
       a {
         color: #64d1a2;
+      }
+      .link,.tech-stack {
+        padding-bottom: 30px;
+      }
+      .project-img-wrap {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        width: 300px;
+        height: 200px;
+        .project-img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
