@@ -1,4 +1,5 @@
 <script setup>
+import Header from './components/Header.vue';
 import Prologue from './components/Prologue.vue';
 import PersonalInfo from './components/PersonalInfo.vue'
 import Skill from './components/Skill.vue'
@@ -15,35 +16,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger.js";
 gsap.registerPlugin(ScrollTrigger);
 
 const isOpen = ref(false)
-const tags = reactive([
-  {
-    tag: '个人信息',
-    className: 'per-info-container'
-  },
-  {
-    tag: '专业技能',
-    className: 'skill-container'
-  },
-  {
-    tag: '工作经历',
-    className: 'work-container'
-  },
-  {
-    tag: '项目经验',
-    className: 'project-container'
-  },
-  {
-    tag: '个人项目',
-    className: 'open-source-pro-container'
-  },
-  {
-    tag: '博客文章',
-    className: 'blog-container'
-  },
-  {
-    tag: '个人评价',
-    className: 'evaluation-container'
-  }])
 
 let sections = undefined
 
@@ -51,10 +23,6 @@ onMounted(() => {
   sections = gsap.utils.toArray('.hidden-float')
   hiddenFloat()
 })
-
-function jump(className) {
-  document.querySelector(`.${className}`).scrollIntoView()
-}
 
 function contactMe() {
   isOpen.value = true
@@ -82,19 +50,7 @@ const hiddenFloat = () => {
 
 <template>
   <div class="main-container">
-    <div class="header">
-      <div class="left">
-        <img src="@/assets/images/profile.jpg" alt="">
-        <div class="me">
-          <div class="name">周蓉欢</div>
-          <div class="job">前端开发工程师</div>
-        </div>
-      </div>
-      <ul class="tag">
-        <li v-for="(item, i) in tags" :key="i" @click="jump(item.className)">{{ item.tag }}</li>
-      </ul>
-    </div>
-
+    <Header />
     <Prologue />
 
     <PersonalInfo class="hidden-float" />
@@ -133,55 +89,6 @@ const hiddenFloat = () => {
 <style lang="less" scoped>
 .main-container {
   width: 100%;
-
-  .header {
-    width: 100%;
-    height: 90px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #707070;
-    padding: 0 40px;
-    background: black;
-
-    .left {
-      display: flex;
-      align-items: center;
-      width: 400px;
-      color: #00d67a;
-
-      img {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        border: 2px solid #00d67a;
-      }
-
-      .me {
-        margin-left: 10px;
-
-        .name {
-          font-size: 20px;
-          margin-bottom: 3px;
-        }
-      }
-    }
-
-    .tag {
-      display: flex;
-      font-size: 20px;
-
-      li {
-        padding: 0 15px;
-        border-right: 1px solid white;
-        cursor: pointer;
-
-        &:last-child {
-          border: none;
-        }
-      }
-    }
-  }
 
   .floating-btn {
     z-index: 100;
