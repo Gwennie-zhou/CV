@@ -2,21 +2,42 @@
 // 动画库
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
-import { onMounted } from "vue";
+import { nextTick, onMounted } from "vue";
 gsap.registerPlugin(ScrollTrigger);
 
-onMounted(() => {
-  gsap.from('.fn-top', {
-    scrollTrigger: '.fn-top',
-    y: -500,
-    duration: 0.8
-  })
-  gsap.from('.fn-bottom', {
-    scrollTrigger: '.fn-top',
-    y: window.innerHeight,
-    duration: 0.8
-  })
+onMounted(async () => {
+  await nextTick()
+  animate()
 })
+
+const animate = () => {
+  const animation = gsap.timeline()
+  animation
+    .from('.fn-top', {
+      y: -500,
+      duration: 0.8
+    })
+    .from('.fn-bottom', {
+      y: window.innerHeight,
+      duration: 0.8
+    }, "<")
+    .from('.prologue-container .statement1', { 
+      width: 0, 
+      duration: 2, 
+    })
+    .from('.prologue-container .statement2', { 
+      width: 0, 
+      duration: 1, 
+    })
+    .from('.prologue-container .statement3', { 
+      width: 0, 
+      duration: 2, 
+    })
+    .from('.prologue-container .statement4', { 
+      width: 0, 
+      duration: 0.5, 
+    })
+}
 
 </script>
 
@@ -27,19 +48,19 @@ onMounted(() => {
       </div>
       <div class="text-wrap">
         <div class="inline-block">
-          <div class="text theme-color">alert('Welcome to my world.')</div>
+          <div class="text theme-color statement1">alert('Welcome to my world.')</div>
         </div>
         <br/>
         <div class="inline-block">
-          <div class="text theme-color">if (you know me) {</div>
+          <div class="text theme-color statement2">if (you know me) {</div>
         </div>
         <br/>
         <div class="inline-block">
-          <div class="text theme-color indent">console.log('you know my world.')</div>
+          <div class="text theme-color indent statement3">console.log('you know my world.')</div>
         </div>
         <br/>
         <div class="inline-block">
-          <div class="text theme-color">}</div>
+          <div class="text theme-color statement4">}</div>
         </div>
       </div>
       <div class="fn-bottom">}</div>
@@ -64,30 +85,30 @@ onMounted(() => {
     display: inline-block;
   }
   .text {
-    visibility: hidden;
+    // visibility: hidden;
     font-size: 54px;
     margin-bottom: 20px;
-    width: 0;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 3px solid transparent;
+    // border-right: 3px solid white;
   }
-  .inline-block:nth-child(1) .text {
-    animation: typing 2s steps(15, end) forwards, flicker .5s 4;
-    animation-delay: 0.8s;
-  }
-  .inline-block:nth-child(3) .text {
-    animation: typing 1s steps(15, end) forwards, flicker .5s 2;
-    animation-delay: 2.8s;
-  }
- .inline-block:nth-child(5) .text {
-    animation: typing 2s steps(15, end) forwards, flicker .5s 4;
-    animation-delay: 3.8s;
-  }
-  .inline-block:nth-child(7) .text {
-    animation: typing .5s steps(15, end) forwards, flicker 1s infinite;
-    animation-delay: 5.8s;
-  }
+//   .inline-block:nth-child(1) .text {
+//     animation: typing 2s steps(15, end) forwards, flicker .5s 4;
+//     animation-delay: 0.8s;
+//   }
+//   .inline-block:nth-child(3) .text {
+//     animation: typing 1s steps(15, end) forwards, flicker .5s 2;
+//     animation-delay: 2.8s;
+//   }
+//  .inline-block:nth-child(5) .text {
+//     animation: typing 2s steps(15, end) forwards, flicker .5s 4;
+//     animation-delay: 3.8s;
+//   }
+//   .inline-block:nth-child(7) .text {
+//     animation: typing .5s steps(15, end) forwards, flicker 1s infinite;
+//     animation-delay: 5.8s;
+//   }
   .indent {
     padding-left: 24px;
   }
