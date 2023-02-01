@@ -11,7 +11,9 @@ onMounted(async () => {
 })
 
 const animate = () => {
-  const animation = gsap.timeline()
+  const animation = gsap.timeline({
+    repeat: -1
+  })
   animation
     .from('.fn-top', {
       y: -500,
