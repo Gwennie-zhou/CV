@@ -21,9 +21,9 @@ const articles = reactive([
   },
   {
     id: 3,
-    name: 'Pure JS Coding Challenge01 — Double-color-ball Lottery',
-    time: '2022.09',
-    link: 'https://medium.com/@gwennie.io/pure-js-coding-challenge01-double-color-ball-lottery-7aedeaadba52'
+    name: '前端工程师如何用代码做出终端打印的效果？',
+    time: '2023.02',
+    link: 'https://medium.com/@gwennie.io/前端工程师如何用代码做出终端打印的效果-106c0b25c07f'
   }
 ])
 

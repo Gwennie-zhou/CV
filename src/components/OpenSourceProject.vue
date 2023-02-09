@@ -31,12 +31,23 @@ const projects = reactive([
     imgName: 'CDNLoader.webp'
   },
   {
+    name: 'virtual-scroll-list',
+    techStack: 'Vue3',
+    desc: '⚡️一个支持高滚动性能的大数据列表的vue组件',
+    githubLink: 'https://github.com/Gwennie-zhou/virtual-scroll-list',
+    CnTitle: '如何手动实现一个虚拟滚动列表？',
+    CnDocLink: 'https://medium.com/@gwennie.io/如何手动实现一个虚拟滚动列表-3a1c2562ca3',
+    EnTitle: '',
+    EnDocLink: '',
+    imgName: 'virtual-scroll-list.png'
+  },
+  {
     name: 'CV',
-    techStack: 'Vue3+gsap',
+    techStack: 'Vue3+GSAP',
     desc: '个人在线简历网站。',
     githubLink: 'https://github.com/Gwennie-zhou/CV',
-    CnTitle: '',
-    CnDocLink: '',
+    CnTitle: '前端工程师如何用代码做出终端打印的效果？',
+    CnDocLink: 'https://medium.com/@gwennie.io/前端工程师如何用代码做出终端打印的效果-106c0b25c07f',
     EnTitle: '',
     EnDocLink: '',
     imgName: 'CV.png'
@@ -165,9 +176,9 @@ const consoleOutput = () => {
 
   const wrapperDomHeight = outputWrapperDom.clientHeight;
   const wrapperDomScrollHeight = outputWrapperDom.scrollHeight;
-  if (wrapperDomScrollHeight > wrapperDomHeight * 1.5) { //设置阈值为1.5一屏半
+  if (wrapperDomScrollHeight > wrapperDomHeight * 2) { //设置阈值为两屏
     const removeNodes = outputConsoleDom.querySelectorAll('*')
-    for (let n = 0; n < ~~(removeNodes.length / 3); n++) {
+    for (let n = 0; n < ~~(removeNodes.length / 2); n++) {
       outputConsoleDom.removeChild(removeNodes[n])
     }
   }
@@ -196,13 +207,19 @@ const removeTimer = () => {
             <div class="name">{{ item.name }}</div>
             <div class="desc">{{ item.desc }}</div>
             <div class="tech-stack">技术栈：{{ item.techStack }}</div>
-            <div v-if="item.githubLink" class="link">github地址：<a :href="item.githubLink" target="_blank">{{ item.githubLink }}</a>
+            <div v-if="item.githubLink" class="link">github地址：<a :href="item.githubLink" target="_blank">{{
+              item.githubLink
+            }}</a>
             </div>
-            <div v-if="item.CnDocLink" class="link">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{ item.CnTitle }}</a></div>
-            <div v-if="item.EnDocLink" class="link">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{ item.EnTitle }}</a></div>
+            <div v-if="item.CnDocLink" class="link">中文说明文档：<a :href="item.CnDocLink" target="_blank">{{
+              item.CnTitle
+            }}</a></div>
+            <div v-if="item.EnDocLink" class="link">英文说明文档：<a :href="item.EnDocLink" target="_blank">{{
+              item.EnTitle
+            }}</a></div>
           </div>
           <div class="project-img-wrap">
-            <img v-if="item.imgName" :src="require('@/assets/images/'+ item.imgName)" alt="" class="project-img"/>
+            <img v-if="item.imgName" :src="require('@/assets/images/' + item.imgName)" alt="" class="project-img" />
           </div>
         </div>
       </div>
@@ -215,7 +232,7 @@ const removeTimer = () => {
 
 <style lang="less" scoped>
 .open-source-pro-container {
-  width: 6000px;
+  width: 7000px;
   height: 100vh;
   overflow: hidden;
 }
@@ -293,15 +310,19 @@ const removeTimer = () => {
       a {
         color: #64d1a2;
       }
-      .link,.tech-stack {
+
+      .link,
+      .tech-stack {
         padding-bottom: 30px;
       }
+
       .project-img-wrap {
         position: absolute;
         top: 30px;
         right: 10px;
         width: 300px;
         height: 200px;
+
         .project-img {
           width: 100%;
           height: 100%;
@@ -340,5 +361,12 @@ const removeTimer = () => {
   100% {
     opacity: 0;
   }
+}
+.log-container {
+  width: 100%;
+  height: 100vh;
+  color: #00ff91;
+  background: black;
+  /* overflow-y: hidden; */
 }
 </style>

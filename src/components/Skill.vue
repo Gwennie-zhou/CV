@@ -10,13 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
 const skills = reactive([
   '熟练使用 Vue2+Vue3 全家桶开发项目',
   '熟练掌握 HTML5+CSS3 模式的 HTML 代码编写，熟练手写标准 CSS 样式',
-  '熟练掌握 JavaScript，能写原生 JS 代码，熟练掌握 JavaScript 中的原型对象、原型链、作用域链、闭包等',
+  '熟练掌握 JavaScript，熟练掌握 JavaScript 中的原型对象、原型链、作用域链、闭包等',
   '熟练使用 git 版本控制工具进行项目管理与团队协助',
   '掌握 webpack 常用配置项的基本使用',
-  '熟悉使用 react 全家桶开发项目',
+  '了解 react 全家桶开发项目',
   '熟悉运用 Vant、Element UI 等前端框架',
   '熟悉使用less、sass 预处理器',
-  '熟悉使用eCharts开发图表',
+  '熟悉使用ECharts开发图表',
   '具有优秀的英语读写能力（英语六级），在 medium上经营技术博客账号',
   '博客地址（需VPN）：-https://medium.com/@gwennie.io'
 ])

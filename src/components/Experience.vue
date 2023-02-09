@@ -57,7 +57,7 @@ onMounted(async ()=> {
                 </div>
                 <div class="task">
                   <div>工作内容：</div>
-                  1. 负责拼团、裂变海报等营销产品 b 端和 c 端的维护，更进和解决由客户提起的工单问题<br />
+                  1. 负责拼团、裂变海报等营销产品 b 端和 c 端的维护，跟进和解决由客户提起的工单问题<br />
                   2. 负责营销产品相关的项目开发，与产品、UI、UX、后端等同学协作实现产品功能，直至项目全网上线
                 </div>
               </div>
@@ -94,14 +94,14 @@ onMounted(async ()=> {
                 原先营销的代码与电商、课程等中心部门耦合嵌套太深，产品迭代更新的速度深受其他中心部门的限制，在与其他部门沟通中花费太多时间，此次项目核心点在于由原先以 npm
                 组件包嵌入其他中心项目的方式改为单组件打包成“umd”格式的 js 上传到 CDN，业务侧以请求 CDN 的 JS 资源动态挂载 script脚本的方式加载营销组件。
               </div>
-              <div class="technology"><span class="bold">项目技术栈：</span>vue+vantUI+axios+webpack</div>
+              <div class="technology"><span class="bold">项目技术栈：</span>Vue + VueCLI +vant 组件库</div>
               <div class="task">
                 <div class="bold">负责内容：</div>
                 <div>1) 参与营销微组件技术方案讨论及设计，同时参与了项目的搭建，<span class="theme-color">开发微组件加载器</span>。</div>
                 <div>2) <span class="theme-color">全权负责拼团模块</span>相关的代码开发，整理统一原先组件代码，整合原有逻辑并重构优化代码，包括但不
                   仅限于：商品详情页中的拼团购买弹幕、拼团玩法、凑团列表，确认支付页中的拼团步骤，支付完成页的拼
                   团流程等。</div>
-                <div>3) 从开发到自测、提测、内灰、外灰直至全网上线，一直更进拼团相关事宜，协助处理开发及测试过程中
+                <div>3) 从开发到自测、提测、内灰、外灰直至全网上线，一直跟进拼团相关事宜，协助处理开发及测试过程中
                   遇到的各类拼团问题，为项目按时上线保驾护航。</div>
                 <div>4) 详细撰写拼团每个组件 readme 文档，以便后来同学若想复用组件可更快更好地接入。</div>
               </div>
@@ -113,21 +113,21 @@ onMounted(async ()=> {
               </div>
             </div>
             <div class="num2">
-              <div class="project-name">邀新拼团</div>
+              <div class="project-name">营销页面性能优化项目</div>
               <div class="desc">
                 <span class="bold">项目描述：</span>
-                邀新拼团即指邀请新人参与店铺拼团活动，通过老用户带领新用户的方式，使得新用户可以用更优惠的价格获得商品的方式帮助商家拓宽流量。
+                解决营销页面首屏加载速度慢，商品列表卡顿等问题
               </div>
-              <div class="technology"><span class="bold">项目技术栈：</span>vue+ElementUI+axios+webpack</div>
+              <div class="technology"><span class="bold">项目技术栈：</span>Vue</div>
               <div class="task">
                 <div class="bold">负责内容：</div>
-                <div>1) 参与 PRD 产品需求会评审、产品讨论、项目立项。</div>
-                <div>2) 负责 b 端管理台页面的开发，包括<span class="theme-color">邀新拼团的新建、编辑、删除活动页面</span>。</div>
-                <div>3) 从提测到上线，一路更进项目进展，修复项目中出现的 bug。</div>
+                <div>1) 通过 VueCLI 自带的 webpack 包体积优化工具 report 指令，分析项目模块体积大小，作为优化的参考</div>
+                <div>2) 优化营销页面首屏加载速度；将大体积的图片上传至 CDN，非首屏路由页面采用路由懒加载，组件异步加载，按需引入插件</div>
+                <div>3) <span class="theme-color">优化推广商品页面长列表展示；实现虚拟滚动效果使长列表不卡顿</span>，提升商品展示速度</div>
               </div>
               <div class="result">
                 <div class="bold">项目效果：</div>
-                通过“老带新”这种方式，为商家带来了更多的流量，同时也助力营销中心提前完成拉新千万目标。
+                营销页面由首屏 6s 加载速度减少至 2+s，推广商品列表滚动顺滑不卡顿
               </div>
             </div>
           </div>
